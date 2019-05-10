@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Reflection;
 
 using System.Text.RegularExpressions;//正規表現用
 using System.Runtime.Serialization;
@@ -173,6 +174,9 @@ namespace ActionTool
 
 		private void frmImage_Load(object sender, EventArgs e)
 		{
+            var asm = Assembly.GetExecutingAssembly();
+            var asmname=asm.GetName();
+            this.Text = this.Text+ ":" + asmname.Version.ToString();
 			//オリジナル画像部分初期化
 			InitializeForOriginalImage();
 			//中心点設定部分初期化
@@ -953,6 +957,10 @@ namespace ActionTool
 			pictCutImage.Image = GetScaledImageFromImage(ref _centeredImage, scale);
 			pictCutImage.Refresh();
 
+            var img = (Image)_centeredFilterLayerBMP;
+            pictCenteredFilter.Image = GetScaledImageFromImage(ref img, scale);
+            pictCenteredFilter.Refresh();
+
 			lblCenterPos.Text = _centerPos.ToString();
 
 			DisplayAdditionalInfo();
@@ -1707,5 +1715,16 @@ namespace ActionTool
 
 			MessageBox.Show("消したで", "後悔すんなよ", MessageBoxButtons.OK, MessageBoxIcon.Information);
 		}
-	}
+
+        private void panelCentered_Scroll(object sender, ScrollEventArgs e)
+        {
+            DisplayAdditionalInfo();
+        }
+
+        private void pictCenteredFilter_Resize(object sender, EventArgs e)
+        {
+            //if (pictCenteredFilter.Image == null) return;
+            //DisplayAdditionalInfo();
+        }
+    }
 }
