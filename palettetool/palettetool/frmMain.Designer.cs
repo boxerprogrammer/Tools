@@ -38,29 +38,33 @@
             // 
             // pictPicture
             // 
-            this.pictPicture.Location = new System.Drawing.Point(12, 12);
+            this.pictPicture.Location = new System.Drawing.Point(16, 15);
+            this.pictPicture.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.pictPicture.Name = "pictPicture";
-            this.pictPicture.Size = new System.Drawing.Size(287, 339);
+            this.pictPicture.Size = new System.Drawing.Size(383, 424);
             this.pictPicture.TabIndex = 0;
             this.pictPicture.TabStop = false;
             // 
             // picPalette
             // 
-            this.picPalette.Location = new System.Drawing.Point(305, 12);
+            this.picPalette.Location = new System.Drawing.Point(407, 15);
+            this.picPalette.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.picPalette.Name = "picPalette";
-            this.picPalette.Size = new System.Drawing.Size(100, 50);
+            this.picPalette.Size = new System.Drawing.Size(133, 62);
             this.picPalette.TabIndex = 1;
             this.picPalette.TabStop = false;
             // 
             // frmMain
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(528, 373);
+            this.ClientSize = new System.Drawing.Size(704, 466);
             this.Controls.Add(this.picPalette);
             this.Controls.Add(this.pictPicture);
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "frmMain";
             this.Text = "パレットツール";
+            this.Load += new System.EventHandler(this.frmMain_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictPicture)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picPalette)).EndInit();
             this.ResumeLayout(false);
