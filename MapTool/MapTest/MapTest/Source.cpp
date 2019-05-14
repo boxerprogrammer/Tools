@@ -144,7 +144,11 @@ bool IntersectPosAndLine(const Position2f& p0, const Position2f& p1, const Posit
 	auto d = (pos - (p0 + L * t)).Length();
 
 	return w + r >= d;
+}
 
+//四角形の中に点があるかどうかを判定する
+bool PointInQuad(const Position2f& p0, const Position2f& p1, const Position2f& p2, const Position2f& p3, const Position2f pos) {
+	return false;
 }
 
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
@@ -155,15 +159,17 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	SetDrawScreen(DX_SCREEN_BACK);
 	auto mapH=LoadGraph("MapData.png");
 	auto blockH = LoadGraph("block2.png");
+	int w,  h;
+	GetGraphSize(blockH, &w, &h);
+
 	SetTextureAddressModeUV(DX_TEXADDRESS_WRAP, DX_TEXADDRESS_WRAP);
 
 	char keystate[256];
 	int x=100, y=100;
-	int w = 32, dy = 0,h=32;
 
 	std::vector<Position2f> points;
 	points.emplace_back(x, y);
-	points.emplace_back(x+w, y+dy);
+	points.emplace_back(x+w, y);
 
 	bool leftCaptured = false;//左ドラッグ状態にあるのか
 	bool rightCaptured = false;//右ドラッグ状態にあるのか
@@ -171,15 +177,12 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 	while (ProcessMessage() == 0) {
 		ClearDrawScreen();
-		//DrawRectExtendGraph(100, 100, 300,132,0,0,32,32,mapH, true);
 		GetHitKeyStateAll(keystate);
 		Position2 mp;//マウス座標
 		GetMousePoint(&mp.x, &mp.y);
 		auto mouseInput = GetMouseInput();
 
 		for (int i = 1; i < points.size(); ++i) {
-			//DrawFlexibleGraph(x, y, w, 32,y+dy, blockH, true);
-
 			//データ通りに描画
 			Vector2f p(points[i-1]);
 			Vector2f v(points[i] - points[i - 1]);
@@ -237,6 +240,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 					leftCaptured = true;
 					capturedIdx = i;
 				}
+
 				if (mouseInput == MOUSE_INPUT_RIGHT) {
 					if (!rightCaptured) {
 						points.push_back(points[i]);
@@ -246,12 +250,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 				}
 				
 			}
-			if (mouseInput != MOUSE_INPUT_RIGHT) {
-				rightCaptured = false;
-			}
-			if (mouseInput!=MOUSE_INPUT_LEFT) {
-				leftCaptured = false;
-			}
+
 			//下辺
 			if (IntersectPosAndLine(p2, p3, ConvertToVector2f(mp), 3, 3)) {
 				DrawLine(p2.x, p2.y, p3.x, p3.y, 0xffaaaa, 3);
@@ -265,7 +264,24 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 					leftCaptured = true;
 					capturedIdx = i-1;
 				}
+				if (mouseInput == MOUSE_INPUT_RIGHT) {
+					if (!rightCaptured) {
+						points.insert(points.begin(), points.front());
+						capturedIdx = 0;
+					}
+					rightCaptured = true;
+				}
 			}
+
+			if (mouseInput != MOUSE_INPUT_RIGHT) {
+				rightCaptured = false;
+			}
+			if (mouseInput != MOUSE_INPUT_LEFT) {
+				leftCaptured = false;
+			}
+
+
+
 		}
 		DrawFormatString(10, 10, 0xffffff, "capturedIdx=%d", capturedIdx);
 
