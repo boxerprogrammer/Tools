@@ -69,3 +69,5 @@ Log.txt
 snake.vcxproj.user
 Debug
 *.pdb
+x64
+.vs
