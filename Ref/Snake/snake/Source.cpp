@@ -94,11 +94,11 @@ int main() {
 				vv0=lastVV1;
 			}
 
-			//DrawLine(x0 - vv0.x, y0 - vv0.y,
-			//		x0 + vv0.x, y0 + vv0.y, 0xffaaaa, 3);
+			DrawLine(x0 - vv0.x, y0 - vv0.y,
+					x0 + vv0.x, y0 + vv0.y, 0xffaaaa, 2);
 
-			//DrawLine(x1 - vv1.x, y1 - vv1.y,
-			//	x1 + vv1.x, y1 + vv1.y, 0xffaaaa, 3);
+			DrawLine(x1 - vv1.x, y1 - vv1.y,
+				x1 + vv1.x, y1 + vv1.y, 0xffaaaa, 2);
 
 			//DrawLine(x0 - vv.x, y0 - vv.y,
 			//	x0 + vv.x, y0 + vv.y, 0xffaaaa, 3);
@@ -135,10 +135,10 @@ int main() {
 
 			lastVV1 = vv1;
 
-			//DrawLine(origX + i * divw, y0, origX + (i + 1) * divw, y1, 0xffffff, 2);
+			DrawLine(origX + i * divw, y0, origX + (i + 1) * divw, y1, 0xffffff, 2);
 
-			//DrawLine(x0 , y0 - snakeH/2,
-			//	x0 , y0 +snakeH/2, 0xffffff, 3);
+			DrawLine(x0 ,100+ y0 - snakeH/2,
+				x0 , 100+y0 +snakeH/2, 0xffffff, 2);
 
 			//DrawLine(x0-vv.x, y0-vv.y, 
 			//	x0+vv.x, y0+vv.y, 0xffaaaa, 3);
