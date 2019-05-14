@@ -165,8 +165,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	points.emplace_back(x, y);
 	points.emplace_back(x+w, y+dy);
 
-
-
 	bool leftCaptured = false;//左ドラッグ状態にあるのか
 	bool rightCaptured = false;//右ドラッグ状態にあるのか
 	int capturedIdx = 0;
@@ -179,45 +177,38 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		GetMousePoint(&mp.x, &mp.y);
 		auto mouseInput = GetMouseInput();
 
-		if (keystate[KEY_INPUT_RIGHT]) {
-			++x;
-		}
-		if (keystate[KEY_INPUT_LEFT]) {
-			--x;
-		}
-		if (keystate[KEY_INPUT_UP]) {
-			--y;
-		}
-		if (keystate[KEY_INPUT_DOWN]) {
-			++y;
-		}
-
-		if (keystate[KEY_INPUT_A]) {
-			--w;
-		}
-		if (keystate[KEY_INPUT_D]) {
-			++w;
-		}
-
-		if (keystate[KEY_INPUT_W]) {
-			--dy;
-		}
-		if (keystate[KEY_INPUT_S]) {
-			dy++;
-		}
-
 		for (int i = 1; i < points.size(); ++i) {
 			//DrawFlexibleGraph(x, y, w, 32,y+dy, blockH, true);
+
+			//データ通りに描画
 			Vector2f p(points[i-1]);
 			Vector2f v(points[i] - points[i - 1]);
-			
 			auto vv = -v.Normalized().Orthogonaled().Scaled(h);
+			auto p0 = p;//左上
+			auto p1 = p + v;//右上
+			auto p2 = p + v + vv;//右下
+			auto p3 = p + vv;//左下
 
-			auto p0 = p;
-			auto p1 = p + v;
-			auto p2 = p + v + vv;
-			auto p3 = p + vv;
-			DrawFlexibleGraph(p, p + v, p + v + vv, p + vv, blockH, true);
+			//次の奴チェックして、次の奴があるなら合うように補正する
+			if (i + 1 < points.size()) {
+				Vector2f p(points[i]);
+				Vector2f v2(points[i+1] - points[i]);
+				auto vv2 = -v2.Normalized().Orthogonaled().Scaled(h);//次の左下
+				auto vv3 = (vv + vv2).Normalized().Scaled(h);//左下
+				p2 = p1 + vv3;
+			}
+
+			//前の奴チェックして、前の奴があるなら合うように補正する
+			if (i-1 > 0) {
+				Vector2f p(points[i-2]);
+				Vector2f v2(points[i -1] - points[i-2]);
+				auto vv2 = -v2.Normalized().Orthogonaled().Scaled(h);//前の右下
+				auto vv3 = (vv + vv2).Normalized().Scaled(h);//右下
+				p3 = p0 + vv3;
+			}
+
+
+			DrawFlexibleGraph(p0, p1, p2, p3, blockH, true);
 			DrawQuadrangleAA(p0.x, p0.y, p1.x, p1.y, p2.x, p2.y, p3.x, p3.y, 0xffffff, false, 1);
 
 
@@ -239,7 +230,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 			//右辺
 			if (IntersectPosAndLine(p1, p2, ConvertToVector2f(mp), 3, 3)) {
+				//「選択状態だよ」描画
 				DrawLine(p1.x, p1.y, p2.x, p2.y, 0xffaaaa, 3);
+
 				if (mouseInput == MOUSE_INPUT_LEFT) {
 					leftCaptured = true;
 					capturedIdx = i;
@@ -256,7 +249,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			if (mouseInput != MOUSE_INPUT_RIGHT) {
 				rightCaptured = false;
 			}
-			if (leftCaptured!=MOUSE_INPUT_LEFT) {
+			if (mouseInput!=MOUSE_INPUT_LEFT) {
 				leftCaptured = false;
 			}
 			//下辺
@@ -266,7 +259,12 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 			//左辺
 			if (IntersectPosAndLine(p3, p0, ConvertToVector2f(mp), 3, 3)) {
+				//「選択状態だよ」描画
 				DrawLine(p3.x, p3.y, p0.x, p0.y, 0xffaaaa, 3);
+				if (mouseInput == MOUSE_INPUT_LEFT) {
+					leftCaptured = true;
+					capturedIdx = i-1;
+				}
 			}
 		}
 		DrawFormatString(10, 10, 0xffffff, "capturedIdx=%d", capturedIdx);
