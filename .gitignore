@@ -64,3 +64,6 @@
 /ActionTool/.vs/ActionTool/v15/.suo
 /ActionTool/ActionTool/ActionTool.csproj.user
 /palettetool/.vs/palettetool/v15/.suo
+Debug
+Log.txt
+snake.vcxproj.user
