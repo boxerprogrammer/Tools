@@ -155,8 +155,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	//
 	ChangeWindowMode(true);
 	SetWindowText("マップツール");
+	SetGraphMode(1280, 720, 32);
 	DxLib_Init();
 	SetDrawScreen(DX_SCREEN_BACK);
+	
 	auto mapH=LoadGraph("MapData.png");
 	auto blockH = LoadGraph("block2.png");
 	int w,  h;
@@ -283,7 +285,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 
 		}
-		DrawFormatString(10, 10, 0xffffff, "capturedIdx=%d", capturedIdx);
+		//DrawFormatString(10, 10, 0xffffff, "capturedIdx=%d", capturedIdx);
 
 
 		//DrawBox(x, y, x + w + 1, y + 32 + 1, 0xffffff, false);
