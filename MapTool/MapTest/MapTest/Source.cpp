@@ -245,7 +245,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 				if (mouseInput == MOUSE_INPUT_RIGHT) {
 					if (!rightCaptured) {
-						points.push_back(points[i]);
+						points.push_back(points[i]+v.Normalized().Scaled(2));
 						capturedIdx = points.size()-1;
 					}
 					rightCaptured = true;
