@@ -160,7 +160,27 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	SetDrawScreen(DX_SCREEN_BACK);
 	
 	auto mapH=LoadGraph("MapData.png");
-	auto blockH = LoadGraph("block2.png");
+
+	//知ってしまった…LoadDivGraphおよびDerivationGraphは同一リソースアドレスを参照していることを…
+	//つまりデータとしては分かれてない。という事はDrawGraph内部であたかも別リソースのように扱えるように
+	//しているだけで、実際には分かれてないのだ。くっそー。
+	int blockH;// = LoadGraph("block2.png");
+	int partsOrigH;
+	int partsH[16];
+//	partsOrigH=LoadGraph("img/bg_chips.png");
+	//for (int i = 0; i < 16; ++i) {
+	//	int idxX = i % 4;
+	//	int idxY = i / 4;
+	//	partsH[i]=DerivationGraph(idxX * 32, idxY * 32, 32, 32, partsOrigH);
+	//}
+	//DeleteGraph(partsOrigH);
+	LoadDivBmpToGraph("img/bg_chips.png", 16, 4, 4, 32, 32, partsH, true, false);
+	blockH = partsH[0];
+	//DrawGraph(100, 100, blockH, true);
+	//ScreenFlip();
+	//WaitKey();
+
+
 	int w,  h;
 	GetGraphSize(blockH, &w, &h);
 
