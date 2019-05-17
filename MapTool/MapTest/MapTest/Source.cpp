@@ -36,13 +36,13 @@ DrawFlexibleGraph(const Position2f& p0,const Position2f& p1,const Position2f& p2
 	verts[2].pos.x = p3.x;
 	verts[2].pos.y = p3.y;
 	verts[2].u = 0.0f;
-	verts[2].v = 1.0f;
+	verts[2].v = rlh;
 
 
 	verts[3].pos.x = p2.x;
 	verts[3].pos.y = p2.y;
 	verts[3].u = rdw;
-	verts[3].v = 1.0f;
+	verts[3].v = rrh;
 
 	unsigned short indices[6] = { 0,1,2,1,3,2 };
 
@@ -116,13 +116,13 @@ DrawFlexibleGraph(int dx, int dy, int w, int h,int ry,/* int sx, int sy, int sw,
 	verts[2].pos.x = dx;
 	verts[2].pos.y = dy + h;
 	verts[2].u = 0.0f;
-	verts[2].v = 1.0f;
+	verts[2].v = rh;
 
 
 	verts[3].pos.x = dx + w;
 	verts[3].pos.y = ry + h;
 	verts[3].u = rw;
-	verts[3].v = 1.0f;
+	verts[3].v = rh;
 
 	unsigned short indices[6] = { 0,1,2,1,3,2 };
 
@@ -164,18 +164,20 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	//知ってしまった…LoadDivGraphおよびDerivationGraphは同一リソースアドレスを参照していることを…
 	//つまりデータとしては分かれてない。という事はDrawGraph内部であたかも別リソースのように扱えるように
 	//しているだけで、実際には分かれてないのだ。くっそー。
-	int blockH;// = LoadGraph("block2.png");
-	int partsOrigH;
-	int partsH[16];
-//	partsOrigH=LoadGraph("img/bg_chips.png");
+	int blockH= LoadGraph("img/ground0.png");
+	int block2H = LoadGraph("img/ground1.png");
+	int block3H = LoadGraph("img/ground2.png");
+	//int partsOrigH;
+	//int partsH[16];
+	//partsOrigH=LoadGraph("img/bg_chips.png");
 	//for (int i = 0; i < 16; ++i) {
 	//	int idxX = i % 4;
 	//	int idxY = i / 4;
 	//	partsH[i]=DerivationGraph(idxX * 32, idxY * 32, 32, 32, partsOrigH);
 	//}
 	//DeleteGraph(partsOrigH);
-	LoadDivBmpToGraph("img/bg_chips.png", 16, 4, 4, 32, 32, partsH, true, false);
-	blockH = partsH[0];
+	//LoadDivGraph("img/bg_chips.png", 16, 4, 4, 32, 32, partsH);
+	//blockH = partsH[0];
 	//DrawGraph(100, 100, blockH, true);
 	//ScreenFlip();
 	//WaitKey();
@@ -232,8 +234,14 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 				p3 = p0 + vv3;
 			}
 
+			//DrawFlexibleGraph(Vector2f(p0.x, p0.y + 63), Vector2f(p1.x, p1.y + 63), Vector2f(p2.x, 720), Vector2f(p3.x, 720), block3H, true);
+			//DrawFlexibleGraph(Vector2f(p0.x, p0.y + 30), Vector2f(p1.x, p1.y + 30), Vector2f(p2.x, p2.y + 32), Vector2f(p3.x, p3.y + 32), block2H, true);
+
 
 			DrawFlexibleGraph(p0, p1, p2, p3, blockH, true);
+
+
+			
 			DrawQuadrangleAA(p0.x, p0.y, p1.x, p1.y, p2.x, p2.y, p3.x, p3.y, 0xffffff, false, 1);
 
 
@@ -265,8 +273,15 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 				if (mouseInput == MOUSE_INPUT_RIGHT) {
 					if (!rightCaptured) {
-						points.push_back(points[i]+v.Normalized().Scaled(2));
-						capturedIdx = points.size()-1;
+						if (i < points.size() - 1) {
+							auto it = points.begin() + i;
+							points.insert(it,points[i] + v.Normalized().Scaled(2.0f));
+							capturedIdx = i+1;
+						}
+						else {
+							points.push_back(points[i] + v.Normalized().Scaled(2.0f));
+							capturedIdx = points.size() - 1;
+						}
 					}
 					rightCaptured = true;
 				}
@@ -306,9 +321,13 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 		}
 		//DrawFormatString(10, 10, 0xffffff, "capturedIdx=%d", capturedIdx);
-
-
 		//DrawBox(x, y, x + w + 1, y + 32 + 1, 0xffffff, false);
+
+		for (auto& p : points) {
+			DrawCircle(p.x, p.y, 3, 0xffffff);
+			DrawCircle(p.x, p.y, 5, 0xffffff,false);
+		}
+
 		ScreenFlip();
 	}
 

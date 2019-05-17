@@ -23,7 +23,7 @@
     <ProjectGuid>{B1CD4A53-900C-47AA-85ED-911F4CBC42C1}</ProjectGuid>
     <RootNamespace>MapTest</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
-    <ProjectName>MapTool</ProjectName>
+    <ProjectName>FlexibleLevelEditor</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
