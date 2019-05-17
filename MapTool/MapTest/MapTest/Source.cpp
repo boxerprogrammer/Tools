@@ -244,6 +244,17 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			
 			DrawQuadrangleAA(p0.x, p0.y, p1.x, p1.y, p2.x, p2.y, p3.x, p3.y, 0xffffff, false, 1);
 
+			auto pp = p0;
+			if (p1.x < pp.x) {
+				pp= p1;
+			}
+			if (p2.x < pp.x) {
+				pp = p2;
+			}
+			if (p3.x < pp.x) {
+				pp = p3;
+			}
+			DrawGraph(pp.x, pp.y, block2H, true);
 
 
 			//Še•Ó‚Æ“_‚Ì“–‚½‚è”»’è
