@@ -264,12 +264,23 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 			//ブロック表示
 			auto a = (p1.y - p0.y) / (p1.x - p0.x);
+			
+			//左ひとつめ
 			DrawGraph(pl.x, pl.y, a<=0?blockH:block2H, true);
 			auto blocknum = (pr.x - pl.x) / w;
-			for (int i = 1; i < blocknum-1; ++i) {
-				DrawGraph(pl.x + i*w, pl.y+i*w*a, a < 0 ? blockH : block2H, true);
+
+			if (a < 0) {
+				for (int i = 1; i < blocknum - 1; ++i) {
+					DrawGraph(pr.x - i * w, pr.y -32- i * w*a, blockH , true);
+				}
+			}
+			else {
+				for (int i = 1; i < blocknum - 1; ++i) {
+					DrawGraph(pl.x + i * w, pl.y + i * w*a, a < 0 ? blockH : block2H, true);
+				}
 			}
 
+			//右ひとつめ
 			DrawGraph(pr.x-32, pr.y, a < 0 ? block2H : blockH, true);
 
 			//斜めありのグラフィクス表示
