@@ -237,24 +237,46 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			//DrawFlexibleGraph(Vector2f(p0.x, p0.y + 63), Vector2f(p1.x, p1.y + 63), Vector2f(p2.x, 720), Vector2f(p3.x, 720), block3H, true);
 			//DrawFlexibleGraph(Vector2f(p0.x, p0.y + 30), Vector2f(p1.x, p1.y + 30), Vector2f(p2.x, p2.y + 32), Vector2f(p3.x, p3.y + 32), block2H, true);
 
+		
 
+			auto pl = p0;
+			auto pr = p0;
+
+			if (p1.x < pl.x) {
+				pl= p1;
+			}
+			if (p2.x < pl.x) {
+				pl = p2;
+			}
+			if (p3.x < pl.x) {
+				pl = p3;
+			}
+
+			if (p1.x > pr.x) {
+				pr = p1;
+			}
+			if (p2.x > pr.x) {
+				pr = p2;
+			}
+			if (p3.x > pr.x) {
+				pr = p3;
+			}
+
+			//ブロック表示
+			auto a = (p1.y - p0.y) / (p1.x - p0.x);
+			DrawGraph(pl.x, pl.y, a<=0?blockH:block2H, true);
+			auto blocknum = (pr.x - pl.x) / w;
+			for (int i = 1; i < blocknum-1; ++i) {
+				DrawGraph(pl.x + i*w, pl.y+i*w*a, a < 0 ? blockH : block2H, true);
+			}
+
+			DrawGraph(pr.x-32, pr.y, a < 0 ? block2H : blockH, true);
+
+			//斜めありのグラフィクス表示
 			DrawFlexibleGraph(p0, p1, p2, p3, blockH, true);
 
-
-			
-			DrawQuadrangleAA(p0.x, p0.y, p1.x, p1.y, p2.x, p2.y, p3.x, p3.y, 0xffffff, false, 1);
-
-			auto pp = p0;
-			if (p1.x < pp.x) {
-				pp= p1;
-			}
-			if (p2.x < pp.x) {
-				pp = p2;
-			}
-			if (p3.x < pp.x) {
-				pp = p3;
-			}
-			DrawGraph(pp.x, pp.y, block2H, true);
+			//枠
+			//DrawQuadrangleAA(p0.x, p0.y, p1.x, p1.y, p2.x, p2.y, p3.x, p3.y, 0xffffff, false, 1);
 
 
 			//各辺と点の当たり判定
@@ -334,9 +356,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		//DrawFormatString(10, 10, 0xffffff, "capturedIdx=%d", capturedIdx);
 		//DrawBox(x, y, x + w + 1, y + 32 + 1, 0xffffff, false);
 
+		//コントロールポイントの明示
 		for (auto& p : points) {
-			DrawCircle(p.x, p.y, 3, 0xffffff);
-			DrawCircle(p.x, p.y, 5, 0xffffff,false);
+			DrawCircle(p.x, p.y, 2, 0xffffff);
+			DrawCircle(p.x, p.y, 4, 0xffffff,false);
 		}
 
 		ScreenFlip();
