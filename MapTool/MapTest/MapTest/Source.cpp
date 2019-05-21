@@ -75,13 +75,13 @@ DrawFlexibleGraph(int dx, int dy, int w, int h,/* int sx, int sy, int sw, int sh
 	verts[2].pos.x = dx;
 	verts[2].pos.y = dy+h;
 	verts[2].u = 0.0f;
-	verts[2].v = 1.0f;
+	verts[2].v = rh;
 
 
 	verts[3].pos.x = dx+w;
 	verts[3].pos.y = dy + h;
 	verts[3].u = rw;
-	verts[3].v = 1.0f;
+	verts[3].v = rh;
 
 	unsigned short indices[6] = { 0,1,2,1,3,2 };
 
@@ -151,11 +151,14 @@ bool PointInQuad(const Position2f& p0, const Position2f& p1, const Position2f& p
 	return false;
 }
 
+const int screen_w = 1280;
+const int screen_h = 720;
+
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	//
 	ChangeWindowMode(true);
 	SetWindowText("マップツール");
-	SetGraphMode(1280, 720, 32);
+	SetGraphMode(screen_w, screen_h, 32);
 	DxLib_Init();
 	SetDrawScreen(DX_SCREEN_BACK);
 	
@@ -164,6 +167,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	//知ってしまった…LoadDivGraphおよびDerivationGraphは同一リソースアドレスを参照していることを…
 	//つまりデータとしては分かれてない。という事はDrawGraph内部であたかも別リソースのように扱えるように
 	//しているだけで、実際には分かれてないのだ。くっそー。
+	int block0H = LoadGraph("img/ground00.png");
 	int blockH= LoadGraph("img/ground0.png");
 	int block2H = LoadGraph("img/ground1.png");
 	int block3H = LoadGraph("img/ground2.png");
@@ -237,6 +241,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			//DrawFlexibleGraph(Vector2f(p0.x, p0.y + 63), Vector2f(p1.x, p1.y + 63), Vector2f(p2.x, 720), Vector2f(p3.x, 720), block3H, true);
 			//DrawFlexibleGraph(Vector2f(p0.x, p0.y + 30), Vector2f(p1.x, p1.y + 30), Vector2f(p2.x, p2.y + 32), Vector2f(p3.x, p3.y + 32), block2H, true);
 
+
+			DrawTile(0, 0, 128, 128, 3, 1, 1.0f, 0.0f, block2H, true);
 		
 
 			auto pl = p0;
@@ -281,19 +287,22 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 			auto absa = fabsf(a);
 			
+			int remainW = pr.x - pl.x;
+			remainW %= w;
 			if (a < 0) {//右上がり
 				for (int i = 1; i <= blocknum ; ++i) {
-					DrawGraph(pr.x - i * w, pr.y - (i-1) * w*a, block2H , true);
+					//DrawGraph(pr.x - i * w, pr.y - (i-1) * w*a, block2H, true);
+
+					DrawFlexibleGraph(pr.x - i * w, pr.y - (i - 1) * w*a, w, screen_h - pr.y, block2H, false);
 				}
+				DrawRectGraph(pl.x, pl.y, 0, 0, remainW, h, block0H, true);
 			}else {//右下がり
 				for (int i = 0; i < blocknum-1; ++i) {
-					DrawGraph(pl.x + i * w, pl.y + i * w*a, a < 0 ? blockH : block2H, true);
+					DrawGraph(pl.x + i * w, pl.y + i * w*a, block2H, true);
 				}
-				int remainW = pr.x - pl.x;
-				remainW%= w;
 				int remainX = pr.x - remainW-1;
-				int remainY = pr.y + (float)remainW*a;
-				DrawRectGraph(remainX, remainY, 0, 0, remainW, h, blockH, true);
+				int remainY = pr.y;
+				DrawRectGraph(remainX, remainY, 0, 0, remainW, h, block0H, true);
 			}
 
 			//右ひとつめ
@@ -383,10 +392,14 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		//DrawFormatString(10, 10, 0xffffff, "capturedIdx=%d", capturedIdx);
 		//DrawBox(x, y, x + w + 1, y + 32 + 1, 0xffffff, false);
 
+		DrawCircle(points[0].x, points[0].y, 2, 0xffffff);
+		DrawCircle(points[0].x, points[0].y, 4, 0xffffff, false);
 		//コントロールポイントの明示
-		for (auto& p : points) {
-			DrawCircle(p.x, p.y, 2, 0xffffff);
-			DrawCircle(p.x, p.y, 4, 0xffffff,false);
+		for(int i=1;i<points.size();++i){
+		//for (auto& p : points) {
+			
+			DrawCircle(points[i].x, points[i].y, 2, 0xffffff);
+			DrawCircle(points[i].x, points[i].y, 4, 0xffffff,false);
 		}
 
 		ScreenFlip();
