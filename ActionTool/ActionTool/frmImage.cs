@@ -1216,40 +1216,40 @@ namespace ActionTool
 			var serializer = new DataContractJsonSerializer(typeof(ProjectInfo));
 			var fs = new System.IO.FileStream(openProjectFile.FileName.ToString(), System.IO.FileMode.Open);//
 			ProjectInfo proj = (ProjectInfo)serializer.ReadObject(fs);
-			if (Path.IsPathRooted(proj.originalFileName))
-			{
+			if (Path.IsPathRooted(proj.originalFileName)) {
 				_originalFileName = proj.originalFileName;
 			}
-			else
-			{
+			else {
 				_originalFileName = Path.GetFullPath(proj.originalFileName);
 			}
 			_cuttingTable = proj.cuttingTable;
-			if (!File.Exists(_originalFileName))
-			{
-				if (MessageBox.Show("関連の画像ファイルが存在しないようです。\n再設定しますか？", "ファイルがないよ", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-				{
-					if (openOriginalPicture.ShowDialog() == DialogResult.Cancel)
-					{
+			if (!File.Exists(_originalFileName)) {
+				if (MessageBox.Show("関連の画像ファイルが存在しないようです。\n再設定しますか？", "ファイルがないよ", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes) {
+					if (openOriginalPicture.ShowDialog() == DialogResult.Cancel) {
 						MessageBox.Show("画像ファイルの関連付けがされてないため\n不正な挙動になります…", "どうなっても知らんよ？", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 						return;
 					}
 					_originalFileName = openOriginalPicture.FileName;
 				}
-				else
-				{
+				else {
 					MessageBox.Show("画像ファイルの関連付けがされてないため\n不正な挙動になります…", "どうなっても知らんよ？", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 					return;
 				}
 			}
+			SetupProject();
+			_savedFileName = openProjectFile.FileName.ToString();
+			fs.Close();
+		}
+
+		private void SetupProject()
+		{
 			_originalImage = Image.FromFile(_originalFileName);
 			pictOriginal.Image = (Image)_originalImage.Clone();
-			fs.Close();
+			
 			listActions.Items.Clear();
 			listPictures.Items.Clear();
 			//アクションループ
-			foreach (var item in _cuttingTable)
-			{
+			foreach (var item in _cuttingTable) {
 				//アクションの追加
 				var index = listActions.Items.Add(item.Key);
 				BuildListFromActionName(item.Key, item.Value);
@@ -1258,7 +1258,6 @@ namespace ActionTool
 			listPictures.SelectedIndices.Add(0);
 			listPictures.Select();
 			txtActionName.Text = listActions.Text;
-			_savedFileName = openProjectFile.FileName.ToString();
 			btnCut.Enabled = true;
 		}
 
@@ -1742,42 +1741,165 @@ namespace ActionTool
             //DisplayAdditionalInfo();
         }
 
-        internal unsafe struct FrameData
+        struct FrameData
         {
-            public fixed char filename[64];
-            public fixed char titlename[16];
-            public Int32 srcX;
-            public Int32 srcY;
-            public Int32 layerNum;
-            public Int32 Width;
-            public Int32 Height;
-            public Int32 destX;
-            public Int32 destY;
-            public Int32 delay;
-            public Int32 layerAdd;
-            public Int32 ckeyFlg;
-            public Int32 ckeyNum;
+            public string filepath;
+            public int srcX;
+            public int srcY;
+            public int layerNum;
+            public int width;
+            public int height;
+            public int destX;
+            public int destY;
+            public int delay;
+            public int layerAdd;
+            public int ckeyFlg;
+			public int ckeyNum;
+			static public FrameData InitializedInstance()
+			{
+				FrameData f;
+				f.filepath = "";
+				f.srcX = 0;
+				f.srcY = 0;
+				f.layerNum = 0;
+				f.width = 0;
+				f.height = 0;
+				f.destX = 0;
+				f.destY = 0;
+				f.delay = 0;
+				f.layerAdd = 0;
+				f.ckeyFlg = 0;
+				f.ckeyNum = 0;
+				return f;
+			}
+            
         };
 
-        private void mnuImportEdgeData_Click(object sender, EventArgs e)
-        {
-            var result = openEdgeFile.ShowDialog();
-            if(result== DialogResult.Cancel){
-                return;
-            }
+		private void mnuImportEdgeData_Click(object sender, EventArgs e)
+		{
+			var result = openEdgeFile.ShowDialog();
+			if (result == DialogResult.Cancel) {
+				return;
+			}
 			var filepath = openEdgeFile.FileName;
+
+			Dictionary<string,List<FrameData>> importdata = ParseAnmDataToFrameList(filepath);
+			ParseAnmDataToFrameList(filepath);
+
+
+			string imgFilePath="";
+			foreach (var action in importdata) {
+				foreach (var data in action.Value) {
+					imgFilePath = data.filepath;
+					CuttingInfo info=new CuttingInfo();
+					info.duration = data.delay;
+					info.center = new Point(data.width / 2, (int)(data.height*0.9f));
+					info.cutRect = new Rectangle();
+					info.cutRect.X = data.srcX;
+					info.cutRect.Y = data.srcY;
+					info.cutRect.Width = data.width;
+					info.cutRect.Height = data.height;
+					if (!_cuttingTable.ContainsKey(action.Key)) {
+						_cuttingTable[action.Key] = new ActionInfo();
+					}
+					if (_cuttingTable[action.Key]._cuts == null) {
+						var actioninfo=_cuttingTable[action.Key];//=new ActionInfo( = new List<CuttingInfo>();
+						actioninfo._cuts = new List<CuttingInfo>();
+						_cuttingTable[action.Key] = actioninfo;
+					}
+					_cuttingTable[action.Key]._cuts.Add(info);
+				}
+			}
+			var dirPath = Path.GetDirectoryName(filepath) + "/";
+			Directory.SetCurrentDirectory(dirPath);
+
+			if (Path.IsPathRooted(imgFilePath)) {
+				_originalFileName = imgFilePath;
+			}
+			else {
+				_originalFileName = Path.GetFullPath(imgFilePath);
+			}
+			
+			
+			SetupProject();
+
+
+		}
+
+		private Dictionary<string,List<FrameData>> ParseAnmDataToFrameList(string filepath)
+		{
+			string currentAction = "";
+			int currentNumber = -1;
+			bool preparedata = false;
+			Dictionary<string, List<FrameData>> importdata = new Dictionary<string, List<FrameData>>();
+			FrameData currentFrameData = FrameData.InitializedInstance();
 			if (File.Exists(filepath)) {
 				StreamReader streamReader = new StreamReader(filepath);
 				while (streamReader.Peek() >= 0) {
 					var line = streamReader.ReadLine();
-					//Match m=Regex.Match(line,@"^[]:(?<a>))
-					Debug.Print();
+					if (line == "" && preparedata) {
+						preparedata = false;
+						if (!importdata.ContainsKey(currentAction)) {
+							importdata[currentAction] = new List<FrameData>();
+						}
+						importdata[currentAction].Add(currentFrameData);
+						currentFrameData = FrameData.InitializedInstance();
+					}
+					line = line.Trim();
+					var strs = line.Split('=');
+					if (strs.Length > 1) {
+						if (strs[0] == "PATTERN_NAME") {
+							preparedata = (currentAction != strs[1]);
+							currentAction = strs[1];
+							line = streamReader.ReadLine();
+						}
+						else if (strs[0] == "FRAME_NUMBER") {
+							preparedata = (currentNumber != int.Parse(strs[1]));
+							currentNumber = int.Parse(strs[1]);
+						}
+						else if (strs[0] == "FILENAME") {
+							currentFrameData.filepath = strs[1];
+						}
+						else if (strs[0] == "SRC_X") {
+							currentFrameData.srcX = int.Parse(strs[1]);
+						}
+						else if (strs[0] == "SRC_Y") {
+							currentFrameData.srcY = int.Parse(strs[1]);
+						}
+						else if (strs[0] == "LAYER_NUM") {
+							currentFrameData.layerNum = int.Parse(strs[1]);
+						}
+						else if (strs[0] == "WIDTH") {
+							currentFrameData.width = int.Parse(strs[1]);
+						}
+						else if (strs[0] == "HEIGHT") {
+							currentFrameData.height = int.Parse(strs[1]);
+						}
+						else if (strs[0] == "DEST_X") {
+							currentFrameData.destX = int.Parse(strs[1]);
+						}
+						else if (strs[0] == "DEST_Y") {
+							currentFrameData.destY = int.Parse(strs[1]);
+						}
+						else if (strs[0] == "DELAY") {
+							currentFrameData.delay = int.Parse(strs[1]);
+						}
+						else if (strs[0] == "LAYER_ADD") {
+							currentFrameData.layerAdd = int.Parse(strs[1]);
+						}
+						else if (strs[0] == "CKEY_ENABLE") {
+							currentFrameData.ckeyFlg = int.Parse(strs[1]);
+						}
+						else if (strs[0] == "CKEY_NUM") {
+							currentFrameData.ckeyNum = int.Parse(strs[1]);
+						}
+					}
 				}
 			}
+			return importdata;
+		}
 
-        }
-
-        private void mnuAppendEdgeData_Click(object sender, EventArgs e)
+		private void mnuAppendEdgeData_Click(object sender, EventArgs e)
         {
             openEdgeFile.ShowDialog();
         }

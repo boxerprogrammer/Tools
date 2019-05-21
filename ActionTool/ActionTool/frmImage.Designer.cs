@@ -494,11 +494,11 @@
 			// txtActionName
 			// 
 			this.txtActionName.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-			this.txtActionName.Font = new System.Drawing.Font("MS UI Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+			this.txtActionName.Font = new System.Drawing.Font("Meiryo UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
 			this.txtActionName.ForeColor = System.Drawing.Color.White;
 			this.txtActionName.Location = new System.Drawing.Point(644, 370);
 			this.txtActionName.Name = "txtActionName";
-			this.txtActionName.Size = new System.Drawing.Size(198, 23);
+			this.txtActionName.Size = new System.Drawing.Size(198, 28);
 			this.txtActionName.TabIndex = 26;
 			// 
 			// saveProjectFile
@@ -566,14 +566,20 @@
 			// txtDuration
 			// 
 			this.txtDuration.BackColor = System.Drawing.Color.DimGray;
-			this.txtDuration.Font = new System.Drawing.Font("MS UI Gothic", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+			this.txtDuration.Font = new System.Drawing.Font("Meiryo UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
 			this.txtDuration.ForeColor = System.Drawing.Color.White;
-			this.txtDuration.Location = new System.Drawing.Point(580, 370);
+			this.txtDuration.Location = new System.Drawing.Point(540, 370);
+			this.txtDuration.Maximum = new decimal(new int[] {
+            999,
+            0,
+            0,
+            0});
 			this.txtDuration.Name = "txtDuration";
-			this.txtDuration.Size = new System.Drawing.Size(39, 22);
+			this.txtDuration.Size = new System.Drawing.Size(100, 27);
 			this.txtDuration.TabIndex = 32;
+			this.txtDuration.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			this.txtDuration.Value = new decimal(new int[] {
-            10,
+            5,
             0,
             0,
             0});
