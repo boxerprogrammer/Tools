@@ -248,7 +248,13 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			if (p2.x < pl.x) {
 				pl = p2;
 			}
+			else if (pl.x==p2.x&&pl.y<p2.y) {
+				pl = p2;
+			}
 			if (p3.x < pl.x) {
+				pl = p3;
+			}
+			else if (pl.x == p3.x&&pl.y < p3.y) {
 				pl = p3;
 			}
 
@@ -257,8 +263,12 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			}
 			if (p2.x > pr.x) {
 				pr = p2;
+			}else if (pr.x == p2.x&&pr.y < p2.y) {
+				pr = p2;
 			}
 			if (p3.x > pr.x) {
+				pr = p3;
+			}else if (pr.x == p3.x&&pr.y < p3.y) {
 				pr = p3;
 			}
 
@@ -266,22 +276,28 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			auto a = (p1.y - p0.y) / (p1.x - p0.x);
 			
 			//左ひとつめ
-			DrawGraph(pl.x, pl.y, a<=0?blockH:block2H, true);
+			//DrawGraph(pl.x, pl.y, a<=0?blockH:block2H, true);
 			auto blocknum = (pr.x - pl.x) / w;
 
-			if (a < 0) {
-				for (int i = 1; i < blocknum - 1; ++i) {
-					DrawGraph(pr.x - i * w, pr.y -32- i * w*a, blockH , true);
+			auto absa = fabsf(a);
+			
+			if (a < 0) {//右上がり
+				for (int i = 1; i <= blocknum ; ++i) {
+					DrawGraph(pr.x - i * w, pr.y - (i-1) * w*a, block2H , true);
 				}
-			}
-			else {
-				for (int i = 1; i < blocknum - 1; ++i) {
+			}else {//右下がり
+				for (int i = 0; i < blocknum-1; ++i) {
 					DrawGraph(pl.x + i * w, pl.y + i * w*a, a < 0 ? blockH : block2H, true);
 				}
+				int remainW = pr.x - pl.x;
+				remainW%= w;
+				int remainX = pr.x - remainW-1;
+				int remainY = pr.y + (float)remainW*a;
+				DrawRectGraph(remainX, remainY, 0, 0, remainW, h, blockH, true);
 			}
 
 			//右ひとつめ
-			DrawGraph(pr.x-32, pr.y, a < 0 ? block2H : blockH, true);
+			//DrawGraph(pr.x-32, pr.y, a < 0 ? block2H : blockH, true);
 
 			//斜めありのグラフィクス表示
 			DrawFlexibleGraph(p0, p1, p2, p3, blockH, true);

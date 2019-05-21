@@ -56,6 +56,10 @@ struct Vector2D {
 
 };
 
+template<typename T>
+bool operator==(const Vector2D<T>& lv, const Vector2D<T>& rv) {
+	return lv.x == rv.x&&lv.y == rv.y;
+}
 
 
 //Vector2D<T>のための+オペレータオーバーロード
