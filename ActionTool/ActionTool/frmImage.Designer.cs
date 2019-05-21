@@ -86,6 +86,11 @@
             this.btnDeleteRect = new System.Windows.Forms.Button();
             this.btnCut = new System.Windows.Forms.Button();
             this.btnDisposeOriginalPicture = new System.Windows.Forms.Button();
+            this.インポートToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuImportEdgeData = new System.Windows.Forms.ToolStripMenuItem();
+            this.openEdgeFile = new System.Windows.Forms.OpenFileDialog();
+            this.追加インポートToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuAppendEdgeData = new System.Windows.Forms.ToolStripMenuItem();
             this.panelCentered.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictCenteredFilter)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictCutImage)).BeginInit();
@@ -247,7 +252,7 @@
             this.panelCentered.Controls.Add(this.pictCenteredFilter);
             this.panelCentered.Controls.Add(this.pictCutImage);
             this.panelCentered.Location = new System.Drawing.Point(719, 62);
-            this.panelCentered.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panelCentered.Margin = new System.Windows.Forms.Padding(4);
             this.panelCentered.Name = "panelCentered";
             this.panelCentered.Size = new System.Drawing.Size(420, 321);
             this.panelCentered.TabIndex = 21;
@@ -311,7 +316,7 @@
             this.listActions.FormattingEnabled = true;
             this.listActions.ItemHeight = 24;
             this.listActions.Location = new System.Drawing.Point(719, 571);
-            this.listActions.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.listActions.Margin = new System.Windows.Forms.Padding(4);
             this.listActions.Name = "listActions";
             this.listActions.Size = new System.Drawing.Size(198, 218);
             this.listActions.TabIndex = 23;
@@ -336,7 +341,9 @@
             this.mnuOpenProject,
             this.mnuSaveProject,
             this.mnuSaveNamedProjectFile,
-            this.mnuWriteBinary});
+            this.mnuWriteBinary,
+            this.インポートToolStripMenuItem,
+            this.追加インポートToolStripMenuItem});
             this.ファイルToolStripMenuItem.Name = "ファイルToolStripMenuItem";
             this.ファイルToolStripMenuItem.Size = new System.Drawing.Size(63, 24);
             this.ファイルToolStripMenuItem.Text = "ファイル";
@@ -345,7 +352,7 @@
             // mnuOpenProject
             // 
             this.mnuOpenProject.Name = "mnuOpenProject";
-            this.mnuOpenProject.Size = new System.Drawing.Size(190, 26);
+            this.mnuOpenProject.Size = new System.Drawing.Size(216, 26);
             this.mnuOpenProject.Text = "プロジェクトを開く";
             this.mnuOpenProject.Click += new System.EventHandler(this.openProject_Click);
             // 
@@ -353,21 +360,21 @@
             // 
             this.mnuSaveProject.Name = "mnuSaveProject";
             this.mnuSaveProject.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.mnuSaveProject.Size = new System.Drawing.Size(190, 26);
+            this.mnuSaveProject.Size = new System.Drawing.Size(216, 26);
             this.mnuSaveProject.Text = "保存";
             this.mnuSaveProject.Click += new System.EventHandler(this.mnuSaveProject_Click);
             // 
             // mnuSaveNamedProjectFile
             // 
             this.mnuSaveNamedProjectFile.Name = "mnuSaveNamedProjectFile";
-            this.mnuSaveNamedProjectFile.Size = new System.Drawing.Size(190, 26);
+            this.mnuSaveNamedProjectFile.Size = new System.Drawing.Size(216, 26);
             this.mnuSaveNamedProjectFile.Text = "名前をつけて保存";
             this.mnuSaveNamedProjectFile.Click += new System.EventHandler(this.mnuSaveNamedProjectFile_Click);
             // 
             // mnuWriteBinary
             // 
             this.mnuWriteBinary.Name = "mnuWriteBinary";
-            this.mnuWriteBinary.Size = new System.Drawing.Size(190, 26);
+            this.mnuWriteBinary.Size = new System.Drawing.Size(216, 26);
             this.mnuWriteBinary.Text = "バイナリ書き出し";
             this.mnuWriteBinary.Click += new System.EventHandler(this.mnuWriteBinary_Click);
             // 
@@ -392,7 +399,7 @@
             this.panellBack.Controls.Add(this.panelOriginal);
             this.panellBack.Controls.Add(this.pictOriginalBack);
             this.panellBack.Location = new System.Drawing.Point(16, 34);
-            this.panellBack.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panellBack.Margin = new System.Windows.Forms.Padding(4);
             this.panellBack.Name = "panellBack";
             this.panellBack.Size = new System.Drawing.Size(657, 639);
             this.panellBack.TabIndex = 25;
@@ -460,7 +467,7 @@
             this.txtActionName.Font = new System.Drawing.Font("MS UI Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.txtActionName.ForeColor = System.Drawing.Color.White;
             this.txtActionName.Location = new System.Drawing.Point(859, 462);
-            this.txtActionName.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtActionName.Margin = new System.Windows.Forms.Padding(4);
             this.txtActionName.Name = "txtActionName";
             this.txtActionName.Size = new System.Drawing.Size(263, 27);
             this.txtActionName.TabIndex = 26;
@@ -529,7 +536,7 @@
             this.txtDuration.Font = new System.Drawing.Font("MS UI Gothic", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.txtDuration.ForeColor = System.Drawing.Color.White;
             this.txtDuration.Location = new System.Drawing.Point(773, 462);
-            this.txtDuration.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtDuration.Margin = new System.Windows.Forms.Padding(4);
             this.txtDuration.Name = "txtDuration";
             this.txtDuration.Size = new System.Drawing.Size(52, 26);
             this.txtDuration.TabIndex = 32;
@@ -581,7 +588,7 @@
             this.listPictures.GridLines = true;
             this.listPictures.LargeImageList = this.imgList;
             this.listPictures.Location = new System.Drawing.Point(928, 571);
-            this.listPictures.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.listPictures.Margin = new System.Windows.Forms.Padding(4);
             this.listPictures.MultiSelect = false;
             this.listPictures.Name = "listPictures";
             this.listPictures.Size = new System.Drawing.Size(197, 278);
@@ -673,7 +680,7 @@
             this.listEditing.Items.AddRange(new object[] {
             "中心点"});
             this.listEditing.Location = new System.Drawing.Point(1149, 84);
-            this.listEditing.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.listEditing.Margin = new System.Windows.Forms.Padding(4);
             this.listEditing.Name = "listEditing";
             this.listEditing.Size = new System.Drawing.Size(159, 98);
             this.listEditing.TabIndex = 45;
@@ -696,7 +703,7 @@
             this.chkLoop.Font = new System.Drawing.Font("Meiryo UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.chkLoop.ForeColor = System.Drawing.Color.White;
             this.chkLoop.Location = new System.Drawing.Point(1133, 809);
-            this.chkLoop.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.chkLoop.Margin = new System.Windows.Forms.Padding(4);
             this.chkLoop.Name = "chkLoop";
             this.chkLoop.Size = new System.Drawing.Size(145, 28);
             this.chkLoop.TabIndex = 47;
@@ -765,6 +772,42 @@
             this.btnDisposeOriginalPicture.TabIndex = 53;
             this.btnDisposeOriginalPicture.Text = "元画像破棄";
             this.btnDisposeOriginalPicture.UseVisualStyleBackColor = false;
+            // 
+            // インポートToolStripMenuItem
+            // 
+            this.インポートToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mnuImportEdgeData});
+            this.インポートToolStripMenuItem.Name = "インポートToolStripMenuItem";
+            this.インポートToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
+            this.インポートToolStripMenuItem.Text = "インポート";
+            // 
+            // mnuImportEdgeData
+            // 
+            this.mnuImportEdgeData.Name = "mnuImportEdgeData";
+            this.mnuImportEdgeData.Size = new System.Drawing.Size(216, 26);
+            this.mnuImportEdgeData.Text = "Edgeデータ";
+            this.mnuImportEdgeData.Click += new System.EventHandler(this.mnuImportEdgeData_Click);
+            // 
+            // openEdgeFile
+            // 
+            this.openEdgeFile.DefaultExt = "anim";
+            this.openEdgeFile.FileName = "*.anim";
+            this.openEdgeFile.Filter = "animファイル|*.anim";
+            // 
+            // 追加インポートToolStripMenuItem
+            // 
+            this.追加インポートToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mnuAppendEdgeData});
+            this.追加インポートToolStripMenuItem.Name = "追加インポートToolStripMenuItem";
+            this.追加インポートToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
+            this.追加インポートToolStripMenuItem.Text = "追加インポート";
+            // 
+            // mnuAppendEdgeData
+            // 
+            this.mnuAppendEdgeData.Name = "mnuAppendEdgeData";
+            this.mnuAppendEdgeData.Size = new System.Drawing.Size(216, 26);
+            this.mnuAppendEdgeData.Text = "Edgeデータ";
+            this.mnuAppendEdgeData.Click += new System.EventHandler(this.mnuAppendEdgeData_Click);
             // 
             // frmImage
             // 
@@ -892,6 +935,11 @@
 		private System.Windows.Forms.Button btnDeleteRect;
 		private System.Windows.Forms.Button btnCut;
 		private System.Windows.Forms.Button btnDisposeOriginalPicture;
-	}
+        private System.Windows.Forms.ToolStripMenuItem インポートToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem mnuImportEdgeData;
+        private System.Windows.Forms.OpenFileDialog openEdgeFile;
+        private System.Windows.Forms.ToolStripMenuItem 追加インポートToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem mnuAppendEdgeData;
+    }
 }
 

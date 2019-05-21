@@ -1726,5 +1726,37 @@ namespace ActionTool
             //if (pictCenteredFilter.Image == null) return;
             //DisplayAdditionalInfo();
         }
+
+        internal unsafe struct FrameData
+        {
+            public fixed char filename[64];
+            public fixed char titlename[16];
+            public Int32 srcX;
+            public Int32 srcY;
+            public Int32 layerNum;
+            public Int32 Width;
+            public Int32 Height;
+            public Int32 destX;
+            public Int32 destY;
+            public Int32 delay;
+            public Int32 layerAdd;
+            public Int32 ckeyFlg;
+            public Int32 ckeyNum;
+        };
+
+        private void mnuImportEdgeData_Click(object sender, EventArgs e)
+        {
+            var result = openEdgeFile.ShowDialog();
+            if(result== DialogResult.Cancel)
+            {
+                return;
+            }
+
+        }
+
+        private void mnuAppendEdgeData_Click(object sender, EventArgs e)
+        {
+            openEdgeFile.ShowDialog();
+        }
     }
 }
