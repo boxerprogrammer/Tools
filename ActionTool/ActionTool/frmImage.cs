@@ -1762,10 +1762,18 @@ namespace ActionTool
         private void mnuImportEdgeData_Click(object sender, EventArgs e)
         {
             var result = openEdgeFile.ShowDialog();
-            if(result== DialogResult.Cancel)
-            {
+            if(result== DialogResult.Cancel){
                 return;
             }
+			var filepath = openEdgeFile.FileName;
+			if (File.Exists(filepath)) {
+				StreamReader streamReader = new StreamReader(filepath);
+				while (streamReader.Peek() >= 0) {
+					var line = streamReader.ReadLine();
+					//Match m=Regex.Match(line,@"^[]:(?<a>))
+					Debug.Print();
+				}
+			}
 
         }
 
