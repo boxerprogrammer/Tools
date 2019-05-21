@@ -243,7 +243,7 @@
             this.btnAddFixCenter.TabIndex = 20;
             this.btnAddFixCenter.Text = "追加登録";
             this.btnAddFixCenter.UseVisualStyleBackColor = false;
-            this.btnAddFixCenter.Click += new System.EventHandler(this.btnFixCenter_Click);
+            this.btnAddFixCenter.Click += new System.EventHandler(this.btnAddFixCenter_Click);
             // 
             // panelCentered
             // 

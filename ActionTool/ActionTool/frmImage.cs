@@ -822,6 +822,7 @@ namespace ActionTool
 			drect.Y = 0;
 			g.DrawImage(_originalImage, drect, rect, GraphicsUnit.Pixel);
 			_centeredImage = bmp;
+			pictCenteredFilter.Image = (Image)_centeredImage.Clone();
 			pictCutImage.Image = bmp;
 		}
 
@@ -859,13 +860,14 @@ namespace ActionTool
 		}
 
 		/// <summary>
-		/// 矩形及び中心点情報をリストに登録する
+		/// 矩形及び中心点情報をリストに追加登録する
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void btnFixCenter_Click(object sender, EventArgs e)
+		private void btnAddFixCenter_Click(object sender, EventArgs e)
 		{
 			CuttingInfo ct;
+			if (_actualCutRect.Width == 0 && _actualCutRect.Height == 0) return;
 			ct.cutRect = _actualCutRect;// _cutRect;
 			ct.center = _centerPos;
 			ct.duration = (int)txtDuration.Value;
@@ -1275,6 +1277,7 @@ namespace ActionTool
 
 		private void listActions_SelectedIndexChanged(object sender, EventArgs e)
 		{
+			if (((ListBox)sender).Items.Count == 0) return;
 			var key = ((ListBox)sender).SelectedItem.ToString();
 			var value = _cuttingTable[key];
 			DisplayCutPicture(value._cuts[0].cutRect, value._cuts[0].center);
@@ -1402,6 +1405,9 @@ namespace ActionTool
 			var pictIndex = listPictures.SelectedIndices[0];
 			var actionName = listActions.Items[actionIndex].ToString();
 			if (pictIndex == -1 || pictIndex >= _cuttingTable[actionName]._cuts.Count) return;
+			if (!_cuttingTable.ContainsKey(actionName)) {
+				return;
+			}
 			var cutdata = _cuttingTable[actionName]._cuts[pictIndex];
 			CutRectForCutRect(cutdata.cutRect);
 			float scale = (float)_centeredImagePercentage / FULL_SCALE_PERCENTAGE;
@@ -1511,6 +1517,15 @@ namespace ActionTool
 			if (MessageBox.Show(txtActionName.Text + "のピクチャ" + _amendingPictureIndex + "番を消去します。よろしいか？", "消す？消す？", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.Cancel) return;
 			//ピクチャテーブルデータの消去
 			_cuttingTable[txtActionName.Text]._cuts.RemoveAt(_amendingPictureIndex);
+            if (_cuttingTable[txtActionName.Text]._cuts.Count == 0){
+				//一つもなくなったら、アクションそのものを削除するかどうかを聞く
+				if (MessageBox.Show("アクション:"+txtActionName.Text + "にはピクチャが0枚です。このアクションを削除します。よろしいか？", "じゃあ、消そうか", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning) == DialogResult.OK) {
+					listActions.Items.Remove(txtActionName.Text);
+					_cuttingTable.Remove(txtActionName.Text);
+					pictCenteredFilter.Image = null;
+					pictCutImage.Image = null;
+				}
+			}
 			listPictures.Items.RemoveAt(_amendingPictureIndex);
 		}
 
