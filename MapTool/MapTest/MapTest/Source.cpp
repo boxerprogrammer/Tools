@@ -373,8 +373,14 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 				}
 				if (mouseInput == MOUSE_INPUT_RIGHT) {
 					if (!rightCaptured) {
-						points.insert(points.begin(), points.front());
-						capturedIdx = 0;
+						if (i == 0) {
+							points.insert(points.begin(), points.front());
+							capturedIdx = 0;
+						}
+						//else {
+						//	points.insert(points.begin() + i - 1, points[i-1]);
+						//	capturedIdx = i - 1;
+						//}
 					}
 					rightCaptured = true;
 				}
@@ -398,7 +404,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		//コントロールポイントの明示
 		for(int i=1;i<points.size();++i){
 		//for (auto& p : points) {
-			
+			DrawLine(points[i].x, points[i].y, points[i - 1].x, points[i - 1].y, 0xffffff, 2);
 			DrawCircle(points[i].x, points[i].y, 2, 0xffffff);
 			DrawCircle(points[i].x, points[i].y, 4, 0xffffff,false);
 		}
