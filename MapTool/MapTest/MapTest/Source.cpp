@@ -242,7 +242,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			//DrawFlexibleGraph(Vector2f(p0.x, p0.y + 30), Vector2f(p1.x, p1.y + 30), Vector2f(p2.x, p2.y + 32), Vector2f(p3.x, p3.y + 32), block2H, true);
 
 
-			DrawTile(0, 0, 128, 128, 3, 1, 1.0f, 0.0f, block2H, true);
+			//DrawTile(0, 0, 128, 128, 3, 1, 1.0f, 0.0f, block2H, true);
 		
 
 			auto pl = p0;
@@ -283,7 +283,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			
 			//ç∂Ç–Ç∆Ç¬Çﬂ
 			//DrawGraph(pl.x, pl.y, a<=0?blockH:block2H, true);
-			auto blocknum = (pr.x - pl.x) / w;
+			int blocknum = (pr.x - pl.x) / w;
 
 			auto absa = fabsf(a);
 			
@@ -295,14 +295,15 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 					DrawFlexibleGraph(pr.x - i * w, pr.y - (i - 1) * w*a, w, screen_h - pr.y, block2H, false);
 				}
-				DrawRectGraph(pl.x, pl.y, 0, 0, remainW, h, block0H, true);
+				DrawFlexibleGraph(pl.x, pl.y, remainW, screen_h-pl.y, block0H, true);
 			}else {//âEâ∫Ç™ÇË
-				for (int i = 0; i < blocknum-1; ++i) {
-					DrawGraph(pl.x + i * w, pl.y + i * w*a, block2H, true);
+				for (int i = 0; i < blocknum; ++i) {
+					DrawFlexibleGraph(pl.x + i * w, pl.y + i * w*a, w, screen_h - pl.y, block2H, false);
+					//DrawGraph(pl.x + i * w, pl.y + i * w*a, block2H, true);
 				}
 				int remainX = pr.x - remainW-1;
 				int remainY = pr.y;
-				DrawRectGraph(remainX, remainY, 0, 0, remainW, h, block0H, true);
+				DrawFlexibleGraph(remainX, remainY, remainW, screen_h-remainY, block0H, true);
 			}
 
 			//âEÇ–Ç∆Ç¬Çﬂ
