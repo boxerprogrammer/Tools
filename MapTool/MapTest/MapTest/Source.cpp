@@ -263,6 +263,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			else if (pl.x == p3.x&&pl.y < p3.y) {
 				pl = p3;
 			}
+			pl.y = p3.y;
 
 			if (p1.x > pr.x) {
 				pr = p1;
@@ -277,6 +278,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			}else if (pr.x == p3.x&&pr.y < p3.y) {
 				pr = p3;
 			}
+			pr.y = p2.y;
 
 			//ブロック表示
 			auto a = (p1.y - p0.y) / (p1.x - p0.x);
@@ -293,17 +295,19 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 				for (int i = 1; i <= blocknum ; ++i) {
 					//DrawGraph(pr.x - i * w, pr.y - (i-1) * w*a, block2H, true);
 
-					DrawFlexibleGraph(pr.x - i * w, pr.y - (i - 1) * w*a, w, screen_h - pr.y, block2H, false);
+					DrawFlexibleGraph(pr.x - i * w, pr.y - (i - 1) * w*a, w, screen_h - pr.y+2, block2H, false);
 				}
-				DrawFlexibleGraph(pl.x, pl.y, remainW, screen_h-pl.y, block0H, true);
+
+				DrawFlexibleGraph(pl.x, pl.y, remainW+1, screen_h-pl.y+2, block2H, true);
 			}else {//右下がり
 				for (int i = 0; i < blocknum; ++i) {
-					DrawFlexibleGraph(pl.x + i * w, pl.y + i * w*a, w, screen_h - pl.y, block2H, false);
+					DrawFlexibleGraph(pl.x + i * w, pl.y + i * w*a, w, screen_h - pl.y+2, block2H, false);
 					//DrawGraph(pl.x + i * w, pl.y + i * w*a, block2H, true);
 				}
+
 				int remainX = pr.x - remainW-1;
 				int remainY = pr.y;
-				DrawFlexibleGraph(remainX, remainY, remainW, screen_h-remainY, block0H, true);
+				DrawFlexibleGraph(remainX, remainY, remainW+1, screen_h-remainY+2, block2H, true);
 			}
 
 			//右ひとつめ
@@ -315,6 +319,16 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			//枠
 			//DrawQuadrangleAA(p0.x, p0.y, p1.x, p1.y, p2.x, p2.y, p3.x, p3.y, 0xffffff, false, 1);
 
+
+			DrawCircle(points[0].x, points[0].y, 2, 0xffffff);
+			DrawCircle(points[0].x, points[0].y, 4, 0xffffff, false);
+			//コントロールポイントの明示
+			for (int i = 1; i < points.size(); ++i) {
+				//for (auto& p : points) {
+				DrawLine(points[i].x, points[i].y, points[i - 1].x, points[i - 1].y, 0xffffff, 2);
+				DrawCircle(points[i].x, points[i].y, 2, 0xffffff);
+				DrawCircle(points[i].x, points[i].y, 4, 0xffffff, false);
+			}
 
 			//各辺と点の当たり判定
 			//上辺
@@ -373,7 +387,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 				}
 				if (mouseInput == MOUSE_INPUT_RIGHT) {
 					if (!rightCaptured) {
-						if (i == 0) {
+						if (i == 1) {
 							points.insert(points.begin(), points.front());
 							capturedIdx = 0;
 						}
@@ -399,15 +413,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		//DrawFormatString(10, 10, 0xffffff, "capturedIdx=%d", capturedIdx);
 		//DrawBox(x, y, x + w + 1, y + 32 + 1, 0xffffff, false);
 
-		DrawCircle(points[0].x, points[0].y, 2, 0xffffff);
-		DrawCircle(points[0].x, points[0].y, 4, 0xffffff, false);
-		//コントロールポイントの明示
-		for(int i=1;i<points.size();++i){
-		//for (auto& p : points) {
-			DrawLine(points[i].x, points[i].y, points[i - 1].x, points[i - 1].y, 0xffffff, 2);
-			DrawCircle(points[i].x, points[i].y, 2, 0xffffff);
-			DrawCircle(points[i].x, points[i].y, 4, 0xffffff,false);
-		}
+
 
 		ScreenFlip();
 	}
