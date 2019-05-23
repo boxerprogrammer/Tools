@@ -91,6 +91,7 @@
 			this.btnCut = new System.Windows.Forms.Button();
 			this.btnDisposeOriginalPicture = new System.Windows.Forms.Button();
 			this.openEdgeFile = new System.Windows.Forms.OpenFileDialog();
+			this.btnBundleCut = new System.Windows.Forms.Button();
 			this.panelCentered.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.pictCenteredFilter)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictCutImage)).BeginInit();
@@ -121,7 +122,7 @@
 			this.btnZoomIn.Font = new System.Drawing.Font("Meiryo UI", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
 			this.btnZoomIn.ForeColor = System.Drawing.Color.White;
 			this.btnZoomIn.Location = new System.Drawing.Point(15, 584);
-			this.btnZoomIn.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+			this.btnZoomIn.Margin = new System.Windows.Forms.Padding(2);
 			this.btnZoomIn.Name = "btnZoomIn";
 			this.btnZoomIn.Size = new System.Drawing.Size(134, 34);
 			this.btnZoomIn.TabIndex = 3;
@@ -135,7 +136,7 @@
 			this.btnZoomOut.Font = new System.Drawing.Font("Meiryo UI", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
 			this.btnZoomOut.ForeColor = System.Drawing.Color.White;
 			this.btnZoomOut.Location = new System.Drawing.Point(167, 584);
-			this.btnZoomOut.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+			this.btnZoomOut.Margin = new System.Windows.Forms.Padding(2);
 			this.btnZoomOut.Name = "btnZoomOut";
 			this.btnZoomOut.Size = new System.Drawing.Size(134, 34);
 			this.btnZoomOut.TabIndex = 4;
@@ -161,7 +162,7 @@
 			this.btnReset.Font = new System.Drawing.Font("Meiryo UI", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
 			this.btnReset.ForeColor = System.Drawing.Color.White;
 			this.btnReset.Location = new System.Drawing.Point(317, 584);
-			this.btnReset.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+			this.btnReset.Margin = new System.Windows.Forms.Padding(2);
 			this.btnReset.Name = "btnReset";
 			this.btnReset.Size = new System.Drawing.Size(134, 34);
 			this.btnReset.TabIndex = 6;
@@ -199,7 +200,7 @@
 			this.btnCenterReset.Font = new System.Drawing.Font("Meiryo UI", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
 			this.btnCenterReset.ForeColor = System.Drawing.Color.White;
 			this.btnCenterReset.Location = new System.Drawing.Point(673, 312);
-			this.btnCenterReset.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+			this.btnCenterReset.Margin = new System.Windows.Forms.Padding(2);
 			this.btnCenterReset.Name = "btnCenterReset";
 			this.btnCenterReset.Size = new System.Drawing.Size(87, 34);
 			this.btnCenterReset.TabIndex = 19;
@@ -213,7 +214,7 @@
 			this.btnCenterShrink.Font = new System.Drawing.Font("Meiryo UI", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
 			this.btnCenterShrink.ForeColor = System.Drawing.Color.White;
 			this.btnCenterShrink.Location = new System.Drawing.Point(611, 312);
-			this.btnCenterShrink.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+			this.btnCenterShrink.Margin = new System.Windows.Forms.Padding(2);
 			this.btnCenterShrink.Name = "btnCenterShrink";
 			this.btnCenterShrink.Size = new System.Drawing.Size(58, 34);
 			this.btnCenterShrink.TabIndex = 18;
@@ -227,7 +228,7 @@
 			this.btnCenterExpand.Font = new System.Drawing.Font("Meiryo UI", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
 			this.btnCenterExpand.ForeColor = System.Drawing.Color.White;
 			this.btnCenterExpand.Location = new System.Drawing.Point(539, 312);
-			this.btnCenterExpand.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+			this.btnCenterExpand.Margin = new System.Windows.Forms.Padding(2);
 			this.btnCenterExpand.Name = "btnCenterExpand";
 			this.btnCenterExpand.Size = new System.Drawing.Size(68, 34);
 			this.btnCenterExpand.TabIndex = 17;
@@ -241,7 +242,7 @@
 			this.btnAddFixCenter.Font = new System.Drawing.Font("Meiryo UI", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
 			this.btnAddFixCenter.ForeColor = System.Drawing.Color.White;
 			this.btnAddFixCenter.Location = new System.Drawing.Point(759, 404);
-			this.btnAddFixCenter.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+			this.btnAddFixCenter.Margin = new System.Windows.Forms.Padding(2);
 			this.btnAddFixCenter.Name = "btnAddFixCenter";
 			this.btnAddFixCenter.Size = new System.Drawing.Size(85, 34);
 			this.btnAddFixCenter.TabIndex = 20;
@@ -266,7 +267,7 @@
 			this.pictCenteredFilter.BackColor = System.Drawing.Color.DimGray;
 			this.pictCenteredFilter.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.pictCenteredFilter.Location = new System.Drawing.Point(0, 0);
-			this.pictCenteredFilter.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+			this.pictCenteredFilter.Margin = new System.Windows.Forms.Padding(2);
 			this.pictCenteredFilter.Name = "pictCenteredFilter";
 			this.pictCenteredFilter.Size = new System.Drawing.Size(305, 258);
 			this.pictCenteredFilter.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
@@ -283,7 +284,7 @@
 			// 
 			this.pictCutImage.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.pictCutImage.Location = new System.Drawing.Point(0, 0);
-			this.pictCutImage.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+			this.pictCutImage.Margin = new System.Windows.Forms.Padding(2);
 			this.pictCutImage.Name = "pictCutImage";
 			this.pictCutImage.Size = new System.Drawing.Size(305, 258);
 			this.pictCutImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
@@ -296,7 +297,7 @@
 			this.btnLoadOriginal.Font = new System.Drawing.Font("Meiryo UI", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
 			this.btnLoadOriginal.ForeColor = System.Drawing.Color.White;
 			this.btnLoadOriginal.Location = new System.Drawing.Point(17, 631);
-			this.btnLoadOriginal.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+			this.btnLoadOriginal.Margin = new System.Windows.Forms.Padding(2);
 			this.btnLoadOriginal.Name = "btnLoadOriginal";
 			this.btnLoadOriginal.Size = new System.Drawing.Size(134, 34);
 			this.btnLoadOriginal.TabIndex = 22;
@@ -353,7 +354,7 @@
 			// mnuOpenProject
 			// 
 			this.mnuOpenProject.Name = "mnuOpenProject";
-			this.mnuOpenProject.Size = new System.Drawing.Size(180, 22);
+			this.mnuOpenProject.Size = new System.Drawing.Size(158, 22);
 			this.mnuOpenProject.Text = "プロジェクトを開く";
 			this.mnuOpenProject.Click += new System.EventHandler(this.openProject_Click);
 			// 
@@ -361,21 +362,21 @@
 			// 
 			this.mnuSaveProject.Name = "mnuSaveProject";
 			this.mnuSaveProject.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-			this.mnuSaveProject.Size = new System.Drawing.Size(180, 22);
+			this.mnuSaveProject.Size = new System.Drawing.Size(158, 22);
 			this.mnuSaveProject.Text = "保存";
 			this.mnuSaveProject.Click += new System.EventHandler(this.mnuSaveProject_Click);
 			// 
 			// mnuSaveNamedProjectFile
 			// 
 			this.mnuSaveNamedProjectFile.Name = "mnuSaveNamedProjectFile";
-			this.mnuSaveNamedProjectFile.Size = new System.Drawing.Size(180, 22);
+			this.mnuSaveNamedProjectFile.Size = new System.Drawing.Size(158, 22);
 			this.mnuSaveNamedProjectFile.Text = "名前をつけて保存";
 			this.mnuSaveNamedProjectFile.Click += new System.EventHandler(this.mnuSaveNamedProjectFile_Click);
 			// 
 			// mnuWriteBinary
 			// 
 			this.mnuWriteBinary.Name = "mnuWriteBinary";
-			this.mnuWriteBinary.Size = new System.Drawing.Size(180, 22);
+			this.mnuWriteBinary.Size = new System.Drawing.Size(158, 22);
 			this.mnuWriteBinary.Text = "バイナリ書き出し";
 			this.mnuWriteBinary.Click += new System.EventHandler(this.mnuWriteBinary_Click);
 			// 
@@ -384,13 +385,13 @@
 			this.インポートToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mnuImportEdgeData});
 			this.インポートToolStripMenuItem.Name = "インポートToolStripMenuItem";
-			this.インポートToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.インポートToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
 			this.インポートToolStripMenuItem.Text = "インポート";
 			// 
 			// mnuImportEdgeData
 			// 
 			this.mnuImportEdgeData.Name = "mnuImportEdgeData";
-			this.mnuImportEdgeData.Size = new System.Drawing.Size(180, 22);
+			this.mnuImportEdgeData.Size = new System.Drawing.Size(126, 22);
 			this.mnuImportEdgeData.Text = "Edgeデータ";
 			this.mnuImportEdgeData.Click += new System.EventHandler(this.mnuImportEdgeData_Click);
 			// 
@@ -399,7 +400,7 @@
 			this.追加インポートToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mnuAppendEdgeData});
 			this.追加インポートToolStripMenuItem.Name = "追加インポートToolStripMenuItem";
-			this.追加インポートToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.追加インポートToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
 			this.追加インポートToolStripMenuItem.Text = "追加インポート";
 			// 
 			// mnuAppendEdgeData
@@ -447,7 +448,7 @@
 			this.panelOriginal.Controls.Add(this.pictOriginalFilter);
 			this.panelOriginal.Controls.Add(this.pictOriginal);
 			this.panelOriginal.Location = new System.Drawing.Point(0, 0);
-			this.panelOriginal.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+			this.panelOriginal.Margin = new System.Windows.Forms.Padding(2);
 			this.panelOriginal.Name = "panelOriginal";
 			this.panelOriginal.Size = new System.Drawing.Size(491, 512);
 			this.panelOriginal.TabIndex = 16;
@@ -457,7 +458,7 @@
 			this.pictOriginalFilter.BackColor = System.Drawing.Color.Transparent;
 			this.pictOriginalFilter.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.pictOriginalFilter.Location = new System.Drawing.Point(0, 0);
-			this.pictOriginalFilter.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+			this.pictOriginalFilter.Margin = new System.Windows.Forms.Padding(2);
 			this.pictOriginalFilter.Name = "pictOriginalFilter";
 			this.pictOriginalFilter.Size = new System.Drawing.Size(640, 640);
 			this.pictOriginalFilter.TabIndex = 14;
@@ -473,7 +474,7 @@
 			this.pictOriginal.BackColor = System.Drawing.Color.Transparent;
 			this.pictOriginal.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
 			this.pictOriginal.Location = new System.Drawing.Point(0, 0);
-			this.pictOriginal.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+			this.pictOriginal.Margin = new System.Windows.Forms.Padding(2);
 			this.pictOriginal.Name = "pictOriginal";
 			this.pictOriginal.Size = new System.Drawing.Size(640, 640);
 			this.pictOriginal.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
@@ -485,7 +486,7 @@
 			this.pictOriginalBack.BackColor = System.Drawing.Color.Black;
 			this.pictOriginalBack.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.pictOriginalBack.Location = new System.Drawing.Point(0, 0);
-			this.pictOriginalBack.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+			this.pictOriginalBack.Margin = new System.Windows.Forms.Padding(2);
 			this.pictOriginalBack.Name = "pictOriginalBack";
 			this.pictOriginalBack.Size = new System.Drawing.Size(493, 511);
 			this.pictOriginalBack.TabIndex = 15;
@@ -644,7 +645,7 @@
 			this.btnPreview.Font = new System.Drawing.Font("Meiryo UI", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
 			this.btnPreview.ForeColor = System.Drawing.SystemColors.Window;
 			this.btnPreview.Location = new System.Drawing.Point(696, 678);
-			this.btnPreview.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+			this.btnPreview.Margin = new System.Windows.Forms.Padding(2);
 			this.btnPreview.Name = "btnPreview";
 			this.btnPreview.Size = new System.Drawing.Size(148, 26);
 			this.btnPreview.TabIndex = 38;
@@ -658,7 +659,7 @@
 			this.btnReEditRect.Font = new System.Drawing.Font("Meiryo UI", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
 			this.btnReEditRect.ForeColor = System.Drawing.Color.White;
 			this.btnReEditRect.Location = new System.Drawing.Point(767, 312);
-			this.btnReEditRect.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+			this.btnReEditRect.Margin = new System.Windows.Forms.Padding(2);
 			this.btnReEditRect.Name = "btnReEditRect";
 			this.btnReEditRect.Size = new System.Drawing.Size(87, 34);
 			this.btnReEditRect.TabIndex = 39;
@@ -672,7 +673,7 @@
 			this.btnFinalizeAmendment.Font = new System.Drawing.Font("Meiryo UI", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
 			this.btnFinalizeAmendment.ForeColor = System.Drawing.Color.White;
 			this.btnFinalizeAmendment.Location = new System.Drawing.Point(167, 631);
-			this.btnFinalizeAmendment.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+			this.btnFinalizeAmendment.Margin = new System.Windows.Forms.Padding(2);
 			this.btnFinalizeAmendment.Name = "btnFinalizeAmendment";
 			this.btnFinalizeAmendment.Size = new System.Drawing.Size(134, 34);
 			this.btnFinalizeAmendment.TabIndex = 40;
@@ -687,7 +688,7 @@
 			this.btnAmendFixCenter.Font = new System.Drawing.Font("Meiryo UI", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
 			this.btnAmendFixCenter.ForeColor = System.Drawing.Color.White;
 			this.btnAmendFixCenter.Location = new System.Drawing.Point(671, 404);
-			this.btnAmendFixCenter.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+			this.btnAmendFixCenter.Margin = new System.Windows.Forms.Padding(2);
 			this.btnAmendFixCenter.Name = "btnAmendFixCenter";
 			this.btnAmendFixCenter.Size = new System.Drawing.Size(84, 34);
 			this.btnAmendFixCenter.TabIndex = 42;
@@ -701,7 +702,7 @@
 			this.btnDeleteFixCenter.Font = new System.Drawing.Font("Meiryo UI", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
 			this.btnDeleteFixCenter.ForeColor = System.Drawing.Color.White;
 			this.btnDeleteFixCenter.Location = new System.Drawing.Point(580, 404);
-			this.btnDeleteFixCenter.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+			this.btnDeleteFixCenter.Margin = new System.Windows.Forms.Padding(2);
 			this.btnDeleteFixCenter.Name = "btnDeleteFixCenter";
 			this.btnDeleteFixCenter.Size = new System.Drawing.Size(85, 34);
 			this.btnDeleteFixCenter.TabIndex = 43;
@@ -762,7 +763,7 @@
 			this.btnAddInfo.Font = new System.Drawing.Font("Meiryo UI", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
 			this.btnAddInfo.ForeColor = System.Drawing.Color.White;
 			this.btnAddInfo.Location = new System.Drawing.Point(987, 67);
-			this.btnAddInfo.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+			this.btnAddInfo.Margin = new System.Windows.Forms.Padding(2);
 			this.btnAddInfo.Name = "btnAddInfo";
 			this.btnAddInfo.Size = new System.Drawing.Size(26, 56);
 			this.btnAddInfo.TabIndex = 50;
@@ -776,7 +777,7 @@
 			this.btnDeleteRect.Font = new System.Drawing.Font("Meiryo UI", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
 			this.btnDeleteRect.ForeColor = System.Drawing.Color.White;
 			this.btnDeleteRect.Location = new System.Drawing.Point(987, 127);
-			this.btnDeleteRect.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+			this.btnDeleteRect.Margin = new System.Windows.Forms.Padding(2);
 			this.btnDeleteRect.Name = "btnDeleteRect";
 			this.btnDeleteRect.Size = new System.Drawing.Size(26, 58);
 			this.btnDeleteRect.TabIndex = 51;
@@ -791,7 +792,7 @@
 			this.btnCut.Font = new System.Drawing.Font("Meiryo UI", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
 			this.btnCut.ForeColor = System.Drawing.Color.White;
 			this.btnCut.Location = new System.Drawing.Point(167, 631);
-			this.btnCut.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+			this.btnCut.Margin = new System.Windows.Forms.Padding(2);
 			this.btnCut.Name = "btnCut";
 			this.btnCut.Size = new System.Drawing.Size(134, 34);
 			this.btnCut.TabIndex = 52;
@@ -805,7 +806,7 @@
 			this.btnDisposeOriginalPicture.Font = new System.Drawing.Font("Meiryo UI", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
 			this.btnDisposeOriginalPicture.ForeColor = System.Drawing.Color.White;
 			this.btnDisposeOriginalPicture.Location = new System.Drawing.Point(17, 631);
-			this.btnDisposeOriginalPicture.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+			this.btnDisposeOriginalPicture.Margin = new System.Windows.Forms.Padding(2);
 			this.btnDisposeOriginalPicture.Name = "btnDisposeOriginalPicture";
 			this.btnDisposeOriginalPicture.Size = new System.Drawing.Size(134, 34);
 			this.btnDisposeOriginalPicture.TabIndex = 53;
@@ -817,6 +818,21 @@
 			this.openEdgeFile.DefaultExt = "anim";
 			this.openEdgeFile.Filter = "anmファイル|*.anm";
 			// 
+			// btnBundleCut
+			// 
+			this.btnBundleCut.BackColor = System.Drawing.Color.DimGray;
+			this.btnBundleCut.Enabled = false;
+			this.btnBundleCut.Font = new System.Drawing.Font("Meiryo UI", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+			this.btnBundleCut.ForeColor = System.Drawing.Color.White;
+			this.btnBundleCut.Location = new System.Drawing.Point(317, 631);
+			this.btnBundleCut.Margin = new System.Windows.Forms.Padding(2);
+			this.btnBundleCut.Name = "btnBundleCut";
+			this.btnBundleCut.Size = new System.Drawing.Size(134, 34);
+			this.btnBundleCut.TabIndex = 54;
+			this.btnBundleCut.Text = "一括切り抜き";
+			this.btnBundleCut.UseVisualStyleBackColor = false;
+			this.btnBundleCut.Click += new System.EventHandler(this.btnBundleCut_Click);
+			// 
 			// frmImage
 			// 
 			this.AllowDrop = true;
@@ -824,6 +840,7 @@
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackColor = System.Drawing.Color.Black;
 			this.ClientSize = new System.Drawing.Size(1024, 715);
+			this.Controls.Add(this.btnBundleCut);
 			this.Controls.Add(this.btnDisposeOriginalPicture);
 			this.Controls.Add(this.btnCut);
 			this.Controls.Add(this.btnDeleteRect);
@@ -864,7 +881,7 @@
 			this.Controls.Add(this.mnuMain);
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.MainMenuStrip = this.mnuMain;
-			this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+			this.Margin = new System.Windows.Forms.Padding(2);
 			this.Name = "frmImage";
 			this.Text = "切り抜き＆中心点ツール";
 			this.Load += new System.EventHandler(this.frmImage_Load);
@@ -948,6 +965,7 @@
         private System.Windows.Forms.OpenFileDialog openEdgeFile;
         private System.Windows.Forms.ToolStripMenuItem 追加インポートToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem mnuAppendEdgeData;
-    }
+		private System.Windows.Forms.Button btnBundleCut;
+	}
 }
 

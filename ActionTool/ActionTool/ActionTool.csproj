@@ -70,6 +70,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="frmBundleCut.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmBundleCut.Designer.cs">
+      <DependentUpon>frmBundleCut.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmImage.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -90,6 +96,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="frmBundleCut.resx">
+      <DependentUpon>frmBundleCut.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmImage.resx">
       <DependentUpon>frmImage.cs</DependentUpon>
     </EmbeddedResource>

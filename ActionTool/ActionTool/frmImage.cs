@@ -1903,5 +1903,11 @@ namespace ActionTool
         {
             openEdgeFile.ShowDialog();
         }
-    }
+
+		private void btnBundleCut_Click(object sender, EventArgs e)
+		{
+			frmBundleCut frm = new frmBundleCut();
+			frm.ShowDialog();
+		}
+	}
 }
