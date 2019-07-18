@@ -457,7 +457,9 @@ namespace ActionTool
 			ret.Y = (int)(rc.Y * scale);
 			ret.Width = (int)(rc.Width * scale);
 			ret.Height = (int)(rc.Height * scale);
-			return ret;
+            ret.Width = ret.Width + (rc.Width % 2);
+            ret.Height = ret.Height + (rc.Height % 2);
+            return ret;
 		}
 
 		/// <summary>
@@ -1063,6 +1065,10 @@ namespace ActionTool
                     rc.Width = (int)((float)rc.Width / rcscale);
                     rc.Height = (int)((float)rc.Height / rcscale);
 
+                    //WidthとHeightを偶数になるよう補正
+                    rc.Width = rc.Width + (rc.Width % 2);
+                    rc.Height = rc.Height + (rc.Height % 2);
+
                     _currentActionRects[listEditing.SelectedIndex-1] = new ActionRect(rt, rc);
 				}
 				p = _centerPos;
@@ -1089,7 +1095,8 @@ namespace ActionTool
                     rc.Y = (int)((float)rc.Y * rcscale);
                     rc.Width = (int)((float)rc.Width * rcscale);
                     rc.Height = (int)((float)rc.Height * rcscale);
-
+                    rc.Width = rc.Width + (rc.Width % 2);
+                    rc.Height = rc.Height + (rc.Height % 2);
                     DrawRectToPictureObject(pictCenteredFilter, rc , pen, false);
 				}
 			}
@@ -1662,6 +1669,10 @@ namespace ActionTool
             rc.Y = (int)((float)rc.Y * scale);
             rc.Width = (int)((float)rc.Width * scale);
             rc.Height = (int)((float)rc.Height * scale);
+            rc.Width = rc.Width + (rc.Width % 2);
+            rc.Height = rc.Height + (rc.Height % 2);
+            rc.Width = rc.Width + (rc.Width % 2);
+            rc.Height = rc.Height + (rc.Height % 2);
             return rc;
         }
 
