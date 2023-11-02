@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Text.Json;
 using System.Diagnostics;
+using System.IO;
 
 namespace JsonToBinary
 {
@@ -22,7 +23,8 @@ namespace JsonToBinary
         struct Rect
         {
             public int x, y;
-            public int w, h;
+            public int width, height;
+            public int offsetX, offsetY;
         }
         Dictionary<string,Rect> rectTable_=new Dictionary<string, Rect>();
 
@@ -33,56 +35,37 @@ namespace JsonToBinary
         {
             if(dlgOpenJSON.ShowDialog() == DialogResult.OK)
             {
-                stream_=dlgOpenJSON.OpenFile();
+                stream_ = dlgOpenJSON.OpenFile();
+                txtTPJSONPath.Text = dlgOpenJSON.FileName;
             }
         }
 
-        private void ParseFrameForArray(JsonElement frameElement)
+        private void ParseFrame(JsonElement frameElement)
         {
-            foreach (var obj in frameElement.EnumerateObject())
+            Nullable<JsonElement> fileNameNode = frameElement.GetProperty("filename");
+            if(fileNameNode != null)
             {
-                if (obj.Name == "filename")
+                var rcElem = frameElement.GetProperty("frame");
+                Rect rc;
+                rc.x=rcElem.GetProperty("x").GetInt32();
+                rc.y = rcElem.GetProperty("y").GetInt32();
+                rc.width = rcElem.GetProperty("w").GetInt32();
+                rc.height = rcElem.GetProperty("h").GetInt32();
+                var isTrimmedNode = frameElement.GetProperty("trimmed");
+                if (isTrimmedNode.GetBoolean())
                 {
-                    Debug.Print(obj.Value.ToString());
-                }
-            }
-        }
+                    var spriteSrcSize = frameElement.GetProperty("spriteSourceSize");
 
-        private void ParseFrameForHash(JsonProperty prop)
-        {
-            Debug.Print(prop.Name);
-            Rect rc;
-            rc.x = 0;
-            rc.y = 0;
-            rc.w = 0;   
-            rc.h = 0;   
-            foreach (var obj in prop.Value.EnumerateObject())
-            {
-                if (obj.Name == "frame")
-                {
-                    foreach (var rectJson in obj.Value.EnumerateObject())
-                    {
-                        if (rectJson.Name == "x")
-                        {
-                            rc.x = rectJson.Value.GetInt32();
-                        }
-                        else if (rectJson.Name == "y")
-                        {
-                            rc.y = rectJson.Value.GetInt32();
-                        }
-                        else if (rectJson.Name == "w")
-                        {
-                            rc.w = rectJson.Value.GetInt32();
-                        }
-                        else if (rectJson.Name == "h")
-                        {
-                            rc.h = rectJson.Value.GetInt32();
-                        }
-                    }
-                    break;
+                    rc.offsetX= spriteSrcSize.GetProperty("x").GetInt32();
+                    rc.offsetY = spriteSrcSize.GetProperty("y").GetInt32();
                 }
+                else
+                {
+                    rc.offsetX = 0;
+                    rc.offsetY = 0;
+                }
+                rectTable_[fileNameNode.Value.ToString()] = rc;
             }
-            rectTable_.Add(prop.Name, rc);  
         }
 
         private void ParseFrames(JsonElement framesElement)
@@ -93,7 +76,7 @@ namespace JsonToBinary
             {
                 foreach (var elem in framesElement.EnumerateArray())
                 {
-                    ParseFrameForArray(elem);
+                    ParseFrame(elem);
                 }
             }
             //TexturePackerの出力設定がハッシュの時はファイル名＝オブジェクト名
@@ -101,7 +84,8 @@ namespace JsonToBinary
             {
                 foreach (var obj in framesElement.EnumerateObject())
                 {
-                    ParseFrameForHash(obj);
+                    Debug.Print(obj.ToString());
+                    ParseFrame(obj.Value);
                 }
             }
 
@@ -113,14 +97,14 @@ namespace JsonToBinary
             {
                 return;
             }
-            
-            if (stream_.Length <= stream_.Position)
+            if(stream_.Position== stream_.Length)
             {
-                stream_.Seek(0,System.IO.SeekOrigin.Begin);
+                stream_.Position = 0;//巻き戻す
             }
             var doc = JsonDocument.Parse(stream_);
+            stream_.Close();
             var root = doc.RootElement;
-            rectTable_.Clear();
+           
             if(root.ValueKind== JsonValueKind.Object)
             {
                 foreach(var obj in root.EnumerateObject())
@@ -130,10 +114,30 @@ namespace JsonToBinary
                         ParseFrames(obj.Value);
                     }
                 }
-            }else if (root.ValueKind == JsonValueKind.Array)
-            {
-                Debug.Print(root.ToString());
+                if(dlgSave.ShowDialog()== DialogResult.OK)
+                {
+                    var saveStream=dlgSave.OpenFile();
+                    if (saveStream != null)
+                    {
+                        BinaryWriter bw = new BinaryWriter(saveStream);
+                        bw.Write(rectTable_.Count());
+                        foreach (var keyValue in rectTable_)
+                        {
+                            bw.Write(keyValue.Key);
+                            bw.Write(keyValue.Value.x);
+                            bw.Write(keyValue.Value.y);
+                            bw.Write(keyValue.Value.width);
+                            bw.Write(keyValue.Value.height);
+                            bw.Write(keyValue.Value.offsetX);
+                            bw.Write(keyValue.Value.offsetY);
+                        }
+                        bw.Close();
+                        saveStream.Close();
+                    }
+
+                }
             }
+            
         }
     }
 }
