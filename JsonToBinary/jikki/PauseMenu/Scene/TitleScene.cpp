@@ -5,6 +5,7 @@
 #include"../Input.h"
 #include"SceneManager.h"
 #include"../StringUtility.h"
+#include<algorithm>
 
 
 
@@ -12,16 +13,86 @@ TitleScene::TitleScene(SceneManager& manager):Scene(manager)
 {
 	auto str=StringUtility::WstringToString(L"StringTest In TitleScene\n");
 	::OutputDebugStringA(str.c_str());
+	bombImg_=LoadGraph(L"./img/explosion.png");
+	bigExpImg_ = LoadGraph(L"./img/big_explosion.png");
 }
 
 void TitleScene::Update(Input& input)
 {
+	auto minput=GetMouseInput();
+	if (minput & MOUSE_INPUT_RIGHT) {
+		int x, y;
+		GetMousePoint(&x, &y);
+		upperPos_ = { 0,y };
+		upperVec_ = {0,-4};
+		lowerPos_ = { 0,y };
+		lowerVec_ = { 0,4 };
+		isExploding_ = true;
+	}
+
+	if (isExploding_) {
+		if (upperVec_.y < 0 && upperPos_.y <= 0) {
+			upperVec_ = { 4,0 };
+		}
+		if (upperVec_.x >0 && upperPos_.x >= 640) {
+			upperVec_ = { 0,4 };
+		}
+		if (upperVec_.y > 0 && upperPos_.y >= 480) {
+			upperVec_ = { -4,0 };
+		}
+		upperPos_ += upperVec_;
+		if (lowerVec_.y > 0 && lowerPos_.y >= 480) {
+			lowerVec_ = { 4,0 };
+		}
+		if (lowerVec_.x > 0 && lowerPos_.x >= 640) {
+			lowerVec_ = { 0,-4 };
+		}
+		if (lowerVec_.y <  0 && lowerPos_.y <= 0) {
+			lowerVec_ = { -4,0 };
+		}
+		lowerPos_ += lowerVec_;
+
+
+		if ((frame_ % 10)==0) {
+			boms_.emplace_back(upperPos_);
+			boms_.emplace_back(lowerPos_);
+		}
+		if (upperPos_ == lowerPos_) {
+			isExploding_ = false;
+			isBigExploding_ = true;
+			bigExplodingFrame_ = 0;
+			bigExpPos_ = upperPos_;
+			boms_.clear();
+			frame_ = 0;
+		}
+	}
+
+	if (isExploding_) {
+		for (auto& b : boms_) {
+			b.frame++;
+			if (b.frame > 60) {
+				b.isDead = true;
+			}
+		}
+		boms_.remove_if([](const Bomb& b) {
+			return b.isDead;
+			});
+	}
+	if (isBigExploding_) {
+		++bigExplodingFrame_;
+		if (bigExplodingFrame_ > 60) {
+			isBigExploding_ = false;
+			bigExplodingFrame_ = 0;
+		}
+	}
+
 	if (input.IsTriggered("next")) {
 		sceneManager_.ChangeScene(std::make_shared<GameScene>(sceneManager_));
 	}
 	else if (input.IsTriggered("keyconfig")) {
 		sceneManager_.PushScene(std::make_shared<KeyconfigScene>(sceneManager_));
 	}
+	frame_ = (frame_ + 1) % 360;
 }
 
 void TitleScene::Draw()
@@ -29,5 +100,35 @@ void TitleScene::Draw()
 	std::string str = "Title Scene MultiByte";
 	std::wstring wstr = StringUtility::StringToWstring(str);
 	DrawString(50, 50, wstr.c_str(), 0xffffff);
+
+	{
+		//DrawCircleAA(upperPos_.x, upperPos_.y, 10, 32, 0xffaaaa);
+		//DrawCircleAA(lowerPos_.x, lowerPos_.y, 10, 32, 0xffaaaa);
+
+
+		for (auto& b : boms_) {
+			DrawRectRotaGraph(b.pos.x, b.pos.y,
+				((b.frame / 6) % 3) * 32,
+				((b.frame / 6) / 3) * 32,
+				32, 32,
+				2.0f,
+				0.0f,
+				bombImg_, true
+			);
+		}
+	}
+	if (isBigExploding_) {
+		auto idx = bigExplodingFrame_ / 6;
+		DrawRectRotaGraph(bigExpPos_.x, bigExpPos_.y,
+			idx * 48,
+			0,
+			48, 48,
+			3.0f,
+			0.0f,
+			bigExpImg_, true
+		);
+	}
+
+
 	//DrawString(50, 50, L"Title Scene", 0xffffff);
 }

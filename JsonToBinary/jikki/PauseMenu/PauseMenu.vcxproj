@@ -137,6 +137,10 @@
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="Enemy\EnemyManager.cpp" />
     <ClCompile Include="Enemy\Enemy.cpp" />
+    <ClCompile Include="File\File.cpp" />
+    <ClCompile Include="File\FileLoader.cpp" />
+    <ClCompile Include="File\ImageFile.cpp" />
+    <ClCompile Include="Geometry.cpp" />
     <ClCompile Include="MimicFile.cpp" />
     <ClCompile Include="Scene\KeyconfigScene.cpp" />
     <ClCompile Include="Scene\GameoverScene.cpp" />
@@ -154,6 +158,10 @@
     <ClInclude Include="Application.h" />
     <ClInclude Include="Enemy\EnemyManager.h" />
     <ClInclude Include="Enemy\Enemy.h" />
+    <ClInclude Include="File\File.h" />
+    <ClInclude Include="File\FileLoader.h" />
+    <ClInclude Include="File\ImageFile.h" />
+    <ClInclude Include="Geometry.h" />
     <ClInclude Include="MimicFile.h" />
     <ClInclude Include="Scene\KeyconfigScene.h" />
     <ClInclude Include="resource.h" />
