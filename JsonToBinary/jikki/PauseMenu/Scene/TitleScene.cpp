@@ -9,12 +9,14 @@
 
 
 
+
 TitleScene::TitleScene(SceneManager& manager):Scene(manager)
 {
 	auto str=StringUtility::WstringToString(L"StringTest In TitleScene\n");
 	::OutputDebugStringA(str.c_str());
 	bombImg_=LoadGraph(L"./img/explosion.png");
 	bigExpImg_ = LoadGraph(L"./img/big_explosion.png");
+	seBomb_ = LoadSoundMem(L"./se/bomb.wav");
 }
 
 void TitleScene::Update(Input& input)
@@ -56,6 +58,9 @@ void TitleScene::Update(Input& input)
 		if ((frame_ % 10)==0) {
 			boms_.emplace_back(upperPos_);
 			boms_.emplace_back(lowerPos_);
+		}
+		if ((frame_ % 5) == 0) {
+			PlaySoundMem(seBomb_, DX_PLAYTYPE_BACK);
 		}
 		if (upperPos_ == lowerPos_) {
 			isExploding_ = false;

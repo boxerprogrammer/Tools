@@ -26,6 +26,7 @@ private:
 	bool isBigExploding_ = false;
 	int bigExplodingFrame_ = 0;
 	int bigExpImg_ = 0;
+	int seBomb_ = 0;
 	Position2 bigExpPos_ = {};
 	bool isExploding_ = false;
 	Position2 upperPos_;
