@@ -5,7 +5,7 @@
 #include<string>
 #include<map>
 #include"../Geometry.h"
-class GameoverScene :
+class ContinueScene:
     public Scene
 {
 private:
@@ -14,8 +14,8 @@ private:
     int handle_;
     std::map<std::string, Rect> rectTable_;
     int frame_;
-    using UpdateFunc_t = void (GameoverScene::*)(Input& input);
-    using DrawFunc_t = void (GameoverScene::*)();
+    using UpdateFunc_t = void (ContinueScene::*)(Input& input);
+    using DrawFunc_t = void (ContinueScene::*)();
 
     UpdateFunc_t updateFunc_;
     DrawFunc_t drawFunc_;
@@ -27,7 +27,7 @@ private:
     void NormalDraw();
 
 public:
-    GameoverScene(SceneManager& manager);
+    ContinueScene(SceneManager& manager);
     virtual void Update(Input& input)override;
     virtual void Draw()override;
 };

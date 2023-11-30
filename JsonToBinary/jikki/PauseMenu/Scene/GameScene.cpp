@@ -335,9 +335,9 @@ void GameScene::NormalDraw()
 	auto it = rectTable_.find(filenames_[idx]);
 	if (it != rectTable_.end()) {
 		auto& rc = it->second;
-		DrawRectRotaGraph(220-rc.offX*5, 240-rc.offY*5,
-			rc.x, rc.y,
-			rc.w, rc.h,
+		DrawRectRotaGraph(220+rc.offX*5, 240+rc.offY*5,
+			rc.pos.x, rc.pos.y,
+			rc.size.w, rc.size.h,
 			5.0f, 0.0f, imgH_, true);
 	}
 	else {

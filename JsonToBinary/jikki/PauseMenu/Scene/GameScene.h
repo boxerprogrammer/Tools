@@ -5,12 +5,9 @@
 #include<string>
 #include<memory>
 #include<array>
+#include"../Geometry.h"
 
 
-struct Rect {
-    int x, y, w, h;
-    int offX, offY;
-};
 class MimicFile;
 class EnemyManager;
 class GameScene :
