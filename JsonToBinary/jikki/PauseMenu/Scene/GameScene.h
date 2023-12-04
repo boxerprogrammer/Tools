@@ -17,7 +17,6 @@ private:
     std::shared_ptr<EnemyManager> enemyManager_;
     float fps_=0.0f;
     std::shared_ptr<MimicFile> cutDataFile_;
-    std::vector<int> imgHs_;
     std::vector<std::string> filenames_;
 
     std::map<std::string, Rect> rectTable_;

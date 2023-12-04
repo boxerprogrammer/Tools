@@ -5,7 +5,7 @@ File::File(FileManager& manager) :manager_(manager) {
 
 }
 File::~File() {
-	manager_.Delete();
+	manager_.Delete(path_);
 }
 int 
 File::GetHandle()const {

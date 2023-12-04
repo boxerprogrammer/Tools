@@ -2,6 +2,7 @@
 #include<DxLib.h>
 #include<cassert>
 #include"Scene/SceneManager.h"
+#include"File/FileManager.h"
 #include"Scene/TitleScene.h"
 #include"Input.h"
 #include<memory>

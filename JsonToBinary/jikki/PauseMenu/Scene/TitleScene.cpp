@@ -5,6 +5,8 @@
 #include"../Input.h"
 #include"SceneManager.h"
 #include"../StringUtility.h"
+#include"../File/FileManager.h"
+#include"../File/File.h"
 #include<algorithm>
 
 
@@ -12,11 +14,10 @@
 
 TitleScene::TitleScene(SceneManager& manager):Scene(manager)
 {
-	auto str=StringUtility::WstringToString(L"StringTest In TitleScene\n");
-	::OutputDebugStringA(str.c_str());
-	bombImg_=LoadGraph(L"./img/explosion.png");
-	bigExpImg_ = LoadGraph(L"./img/big_explosion.png");
-	seBomb_ = LoadSoundMem(L"./se/bomb.wav");
+	auto& fileMgr = manager.GetFileManager();
+	bombImg_= fileMgr.LoadImageFile(L"./img/explosion.png");
+	bigExpImg_ = fileMgr.LoadImageFile(L"./img/big_explosion.png");
+	seBomb_ = fileMgr.LoadSoundFile(L"./se/bomb.wav");
 }
 
 void TitleScene::Update(Input& input)
@@ -60,7 +61,7 @@ void TitleScene::Update(Input& input)
 			boms_.emplace_back(lowerPos_);
 		}
 		if ((frame_ % 5) == 0) {
-			PlaySoundMem(seBomb_, DX_PLAYTYPE_BACK);
+			PlaySoundMem(seBomb_->GetHandle(), DX_PLAYTYPE_BACK);
 		}
 		if (upperPos_ == lowerPos_) {
 			isExploding_ = false;
@@ -118,7 +119,7 @@ void TitleScene::Draw()
 				32, 32,
 				2.0f,
 				0.0f,
-				bombImg_, true
+				bombImg_->GetHandle(), true
 			);
 		}
 	}
@@ -130,7 +131,7 @@ void TitleScene::Draw()
 			48, 48,
 			3.0f,
 			0.0f,
-			bigExpImg_, true
+			bigExpImg_->GetHandle(), true
 		);
 	}
 

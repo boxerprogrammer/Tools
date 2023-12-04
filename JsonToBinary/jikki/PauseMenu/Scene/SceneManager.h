@@ -4,12 +4,15 @@
 #include<list>
 class Scene;
 class Input;
-
+class FileManager;
 class SceneManager
 {
 private:
+	FileManager& fileManager_;
 	std::list<std::shared_ptr<Scene> > scenes_;//現在実行中のシーン
 public:
+	FileManager& GetFileManager();
+	SceneManager(FileManager& fileManager);
 	/// <summary>
 	/// 先頭の(Updateが呼ばれる)シーンを切り替える
 	/// </summary>

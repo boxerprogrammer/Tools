@@ -1,6 +1,15 @@
 #include "SceneManager.h"
 #include"Scene.h"
 
+FileManager& SceneManager::GetFileManager()
+{
+	return fileManager_;
+}
+
+SceneManager::SceneManager(FileManager& fileManager):fileManager_(fileManager)
+{
+}
+
 void SceneManager::ChangeScene(std::shared_ptr<Scene> scene)
 {
 	if (scenes_.empty()) {
