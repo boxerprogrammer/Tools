@@ -25,7 +25,8 @@ bool Application::Init()
 
 void Application::Run()
 {
-	SceneManager sceneManager;
+	FileManager fileManager;
+	SceneManager sceneManager(fileManager);
 	sceneManager.ChangeScene(std::make_shared<TitleScene>(sceneManager));
 
 	Input input;
@@ -40,6 +41,7 @@ void Application::Run()
 
 		ScreenFlip();
 	}
+	DxLib_End();
 }
 
 void Application::Terminate()
