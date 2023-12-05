@@ -7,7 +7,17 @@
 #include"Input.h"
 #include<memory>
 
-bool Application::Init()
+namespace {
+	constexpr int screen_width = 640;
+	constexpr int screen_height = 480;
+}
+
+Application::Application() : screenSize_{screen_width,screen_height} {
+
+}
+
+bool 
+Application::Init()
 {
 	std::random_device rd;
 	//アプリケーション中に１回だけ
@@ -24,7 +34,8 @@ bool Application::Init()
 	return true;
 }
 
-void Application::Run()
+void 
+Application::Run()
 {
 	FileManager fileManager;
 	SceneManager sceneManager(fileManager);
@@ -50,7 +61,14 @@ void Application::Terminate()
 	DxLib_End();
 }
 
-std::mt19937 Application::CreateRandomObject()
+std::mt19937 
+Application::CreateRandomObject()
 {
 	return std::mt19937(mt_());
+}
+
+const Size& 
+Application::GetWindowSize() const
+{
+	return screenSize_;
 }

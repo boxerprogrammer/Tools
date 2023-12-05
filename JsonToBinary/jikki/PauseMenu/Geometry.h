@@ -14,6 +14,12 @@ struct Vector2D {
 		x *= scale;
 		y *= scale;
 	}
+
+	void operator*=(const Vector2D<T>& v) {
+		x *= v.x;
+		y *= v.y;
+	}
+
 	void operator-=(const Vector2D<T>& in) {
 		x -= in.x;
 		y -= in.y;
@@ -79,6 +85,12 @@ Vector2D<T> operator-(const Vector2D<T>& lv, const Vector2D<T>& rv) {
 template<typename T>
 Vector2D<T> operator*(const Vector2D<T>& lv, const float scale) {
 	return Vector2D<T>(lv.x*scale, lv.y*scale);
+}
+
+
+template<typename T>
+Vector2D<T> operator*(const Vector2D<T>& lv, const  Vector2D<T>& rv) {
+	return Vector2D<T>(lv.x * rv.x, lv.y * rv.y);
 }
 
 //êÆêîå^ÉxÉNÉgÉã

@@ -104,7 +104,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <LanguageStandard>stdcpp17</LanguageStandard>
+      <LanguageStandard>stdcpp20</LanguageStandard>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <AdditionalIncludeDirectories>$(DXLIB_DIR)</AdditionalIncludeDirectories>
     </ClCompile>
@@ -135,6 +135,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
+    <ClCompile Include="Background\Background.cpp" />
+    <ClCompile Include="Background\BGPart.cpp" />
     <ClCompile Include="Enemy\EnemyManager.cpp" />
     <ClCompile Include="Enemy\Enemy.cpp" />
     <ClCompile Include="File\File.cpp" />
@@ -142,6 +144,8 @@
     <ClCompile Include="File\ImageFile.cpp" />
     <ClCompile Include="File\ModelFile.cpp" />
     <ClCompile Include="File\SoundFile.cpp" />
+    <ClCompile Include="Transition\TileTransitor.cpp" />
+    <ClCompile Include="Transition\FragmentTransitor.cpp" />
     <ClCompile Include="Geometry.cpp" />
     <ClCompile Include="MimicFile.cpp" />
     <ClCompile Include="Scene\ContinueScene.cpp" />
@@ -156,9 +160,12 @@
     <ClCompile Include="Scene\TitleScene.cpp" />
     <ClCompile Include="Enemy\Slime.cpp" />
     <ClCompile Include="StringUtility.cpp" />
+    <ClCompile Include="Transition\Transitor.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
+    <ClInclude Include="Background\Background.h" />
+    <ClInclude Include="Background\BGPart.h" />
     <ClInclude Include="Enemy\EnemyManager.h" />
     <ClInclude Include="Enemy\Enemy.h" />
     <ClInclude Include="File\File.h" />
@@ -166,6 +173,8 @@
     <ClInclude Include="File\ImageFile.h" />
     <ClInclude Include="File\ModelFile.h" />
     <ClInclude Include="File\SoundFile.h" />
+    <ClInclude Include="Transition\TileTransitor.h" />
+    <ClInclude Include="Transition\FragmentTransitor.h" />
     <ClInclude Include="Geometry.h" />
     <ClInclude Include="MimicFile.h" />
     <ClInclude Include="Scene\ContinueScene.h" />
@@ -180,6 +189,7 @@
     <ClInclude Include="Scene\TitleScene.h" />
     <ClInclude Include="Enemy\Slime.h" />
     <ClInclude Include="StringUtility.h" />
+    <ClInclude Include="Transition\Transitor.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="PauseMenu.rc" />

@@ -18,6 +18,7 @@ struct Bomb {
 	Bomb(const Position2& p):pos(p){}
 };
 class File;
+class Background;
 class TitleScene :
     public Scene
 {
@@ -25,6 +26,7 @@ private:
 	std::shared_ptr<File> bombImg_;
 	std::shared_ptr<File> bigExpImg_;
 	std::shared_ptr<File> seBomb_;
+	std::shared_ptr<Background> bg_;
 
 	int frame_;
 	bool isBigExploding_ = false;

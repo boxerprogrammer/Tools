@@ -2,11 +2,14 @@
 
 #include<random>
 
+#include"Geometry.h"
+
 class Application
 {
 private:
 	std::mt19937 mt_;
-	Application() {};
+	Size screenSize_;
+	Application();
 	Application(const Application&)=delete;
 	void operator=(const Application&)=delete;
 public:
@@ -20,6 +23,6 @@ public:
 	void Terminate();
 
 	std::mt19937 CreateRandomObject();
-
+	const Size& GetWindowSize()const;
 };
 

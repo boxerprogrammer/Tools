@@ -8,6 +8,7 @@
 #include"../File/FileManager.h"
 #include"../File/File.h"
 #include<algorithm>
+#include"../Background/Background.h"
 
 
 
@@ -18,6 +19,14 @@ TitleScene::TitleScene(SceneManager& manager):Scene(manager)
 	bombImg_= fileMgr.LoadImageFile(L"./img/explosion.png");
 	bigExpImg_ = fileMgr.LoadImageFile(L"./img/big_explosion.png");
 	seBomb_ = fileMgr.LoadSoundFile(L"./se/bomb.wav");
+	bg_ = std::make_shared<Background>(2.0f);
+	bg_->AddPart(fileMgr.LoadImageFile(L"img/bg/sky.png"), { 0.0f,0.0f }, 0);
+	bg_->AddPart(fileMgr.LoadImageFile(L"img/bg/far-clouds.png"), { 0.2f,0.0f }, 1);
+	bg_->AddPart(fileMgr.LoadImageFile(L"img/bg/near-clouds.png"), { 0.4f,0.0f }, 2);
+	bg_->AddPart(fileMgr.LoadImageFile(L"img/bg/mountains.png"), { 0.6f,0.0f }, 3);
+	bg_->AddPart(fileMgr.LoadImageFile(L"img/bg/trees.png"), { 1.0f,0.0f }, 4);
+	bg_->Ready();
+	
 }
 
 void TitleScene::Update(Input& input)
@@ -91,18 +100,25 @@ void TitleScene::Update(Input& input)
 			bigExplodingFrame_ = 0;
 		}
 	}
+	frame_ = (frame_ + 1) % 360;
+	bg_->Move({ -1.0f,0.0f });
+
 
 	if (input.IsTriggered("next")) {
 		sceneManager_.ChangeScene(std::make_shared<GameScene>(sceneManager_));
+		return;
 	}
 	else if (input.IsTriggered("keyconfig")) {
 		sceneManager_.PushScene(std::make_shared<KeyconfigScene>(sceneManager_));
 	}
-	frame_ = (frame_ + 1) % 360;
+
 }
 
 void TitleScene::Draw()
 {
+
+	bg_->Draw();
+
 	std::string str = "Title Scene MultiByte";
 	std::wstring wstr = StringUtility::StringToWstring(str);
 	DrawString(50, 50, wstr.c_str(), 0xffffff);

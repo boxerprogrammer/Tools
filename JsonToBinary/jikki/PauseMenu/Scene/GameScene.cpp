@@ -207,7 +207,7 @@ void GameScene::NormalDraw()
 
 	enemyManager_->Draw();
 
-	int idx=(idx+offsets_[1])%filenames_.size();
+	int idx=(frame_/6)%filenames_.size();
 	auto it = rectTable_.find(filenames_[idx]);
 	if (it != rectTable_.end()) {
 		auto& rc = it->second;
