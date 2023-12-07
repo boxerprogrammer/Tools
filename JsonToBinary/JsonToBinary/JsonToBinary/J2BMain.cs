@@ -55,9 +55,17 @@ namespace JsonToBinary
                 if (isTrimmedNode.GetBoolean())
                 {
                     var spriteSrcSize = frameElement.GetProperty("spriteSourceSize");
+                    var sourceSize = frameElement.GetProperty("sourceSize");
 
-                    rc.offsetX= spriteSrcSize.GetProperty("x").GetInt32();
-                    rc.offsetY = spriteSrcSize.GetProperty("y").GetInt32();
+                    var w= sourceSize.GetProperty("w").GetInt32();
+                    var h = sourceSize.GetProperty("h").GetInt32();
+
+                    var x = spriteSrcSize.GetProperty("x").GetInt32();
+                    var y = spriteSrcSize.GetProperty("y").GetInt32();
+
+            
+                    rc.offsetX = x -(w-rc.width)/2;
+                    rc.offsetY = y -(h-rc.height)/2;
                 }
                 else
                 {
