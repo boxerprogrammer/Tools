@@ -44,7 +44,7 @@ Application::Run()
 	Input input;
 
 	while (ProcessMessage() != -1) {
-		ClearDrawScreen();
+		//ClearDrawScreen();
 
 		input.Update();
 

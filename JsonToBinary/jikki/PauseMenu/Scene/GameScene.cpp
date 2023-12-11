@@ -11,7 +11,7 @@
 #include"../Application.h"
 #include<random>
 #include"../Enemy/EnemyManager.h"
-
+#include"../Transition/StripTransitor.h"
 void GameScene::InitializeUpdate(Input& input)
 {
 	auto& app = Application::GetInstance();
@@ -198,6 +198,7 @@ void GameScene::NormalUpdate(Input& input)
 	else if (input.IsTriggered("attack")) {
 		DrawString(250, 250, L"attack", 0xffffff);
 	}
+	transitor_->Update();
 }
 
 void GameScene::NormalDraw()
@@ -219,7 +220,7 @@ void GameScene::NormalDraw()
 	else {
 		assert(0);
 	}
-	
+	transitor_->Draw();
 	++frame_;
 }
 
@@ -229,6 +230,8 @@ drawFunc_ (&GameScene::InitializeDraw)
 {
 	cutDataFile_ = std::make_shared<MimicFile>();
 	enemyManager_ = std::make_shared<EnemyManager>();
+	transitor_ = std::make_shared<StripTransitor>();
+	transitor_->Start();
 }
 
 void GameScene::Update(Input& input)
@@ -238,6 +241,7 @@ void GameScene::Update(Input& input)
 
 void GameScene::Draw()
 {
+	ClearDrawScreen();
 	(this->*drawFunc_)();
 
 }

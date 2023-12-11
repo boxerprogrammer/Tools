@@ -10,10 +10,13 @@
 
 class MimicFile;
 class EnemyManager;
+class Transitor;
 class GameScene :
     public Scene
 {
 private:
+    std::shared_ptr<Transitor> transitor_;
+
     std::shared_ptr<EnemyManager> enemyManager_;
     float fps_=0.0f;
     std::shared_ptr<MimicFile> cutDataFile_;
