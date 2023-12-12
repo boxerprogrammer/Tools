@@ -1,14 +1,14 @@
 #pragma once
 #include "Transitor.h"
+//’Zûƒgƒ‰ƒ“ƒWƒVƒ‡ƒ“
 class StripTransitor :
     public Transitor
 {
 private:
 	int width_ = 100;
 public:
-	virtual void Start() override;
+	StripTransitor(int width = 100, int interval = 60);
 	virtual void Update() override;
 	virtual void Draw() override;
-	virtual bool IsEnd()const override;
 };
 

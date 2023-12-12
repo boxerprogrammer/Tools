@@ -11,6 +11,7 @@
 class MimicFile;
 class EnemyManager;
 class Transitor;
+class File;
 class GameScene :
     public Scene
 {
@@ -23,7 +24,9 @@ private:
     std::vector<std::string> filenames_;
 
     std::map<std::string, Rect> rectTable_;
-    int imgH_ = 0;
+    std::shared_ptr<File> imgH_ ;
+    std::shared_ptr<File> bgH_;
+
     int frame_ = 0;
     int nowLoadCnt = 0;
     using UpdateFunc_t = void (GameScene::*)(Input& input);

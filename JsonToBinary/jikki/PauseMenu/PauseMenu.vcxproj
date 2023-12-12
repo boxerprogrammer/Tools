@@ -144,6 +144,7 @@
     <ClCompile Include="File\ImageFile.cpp" />
     <ClCompile Include="File\ModelFile.cpp" />
     <ClCompile Include="File\SoundFile.cpp" />
+    <ClCompile Include="Transition\FallTileTransitor.cpp" />
     <ClCompile Include="Transition\StripTransitor.cpp" />
     <ClCompile Include="Transition\TileTransitor.cpp" />
     <ClCompile Include="Transition\FragmentTransitor.cpp" />
@@ -174,6 +175,7 @@
     <ClInclude Include="File\ImageFile.h" />
     <ClInclude Include="File\ModelFile.h" />
     <ClInclude Include="File\SoundFile.h" />
+    <ClInclude Include="Transition\FallTileTransitor.h" />
     <ClInclude Include="Transition\StripTransitor.h" />
     <ClInclude Include="Transition\TileTransitor.h" />
     <ClInclude Include="Transition\FragmentTransitor.h" />

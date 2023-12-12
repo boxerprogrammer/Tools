@@ -122,6 +122,7 @@ void GameoverScene::Update(Input& input)
 
 void GameoverScene::Draw()
 {
+	ClearDrawScreen();
 	(this->*drawFunc_)();
 	DrawString(50, 50, L"Gameover Scene", 0xffffff);
 }

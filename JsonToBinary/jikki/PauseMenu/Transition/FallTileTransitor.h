@@ -2,20 +2,21 @@
 #include "Transitor.h"
 #include<vector>
 #include<random>
-class TileTransitor :
+class FallTileTransitor :
     public Transitor
 {
 private:
     int cellSize_=50;
     struct XYIdx{
         int xidx, yidx;
+        int yoffset=0;
+        float vy=0.0f;
     };
     std::mt19937 mt_;
     std::vector<XYIdx> tiles_;
-    //float g_;
-    //std::vector<float> vys_;
+    float g_;
 public:
-    TileTransitor(int cellSize = 50, int interval = 60);
+    FallTileTransitor(int cellSize = 50, float gravity=0.0f,int interval = 60);
     virtual void Update() override;
     virtual void Draw() override;
    

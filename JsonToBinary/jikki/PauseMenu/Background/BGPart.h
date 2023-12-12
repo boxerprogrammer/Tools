@@ -23,6 +23,7 @@ public:
 									Position2f pos,
 									Vector2f rate,
 									int priority);
+	~BGPart();
 	bool operator<(const BGPart& val);
 	void Update();
 	void Move(const Vector2f& v);

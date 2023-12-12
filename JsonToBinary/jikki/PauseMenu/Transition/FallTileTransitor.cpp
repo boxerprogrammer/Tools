@@ -1,4 +1,4 @@
-#include "TileTransitor.h"
+#include "FallTileTransitor.h"
 #include<DxLib.h>
 #include"../Application.h"
 
@@ -8,8 +8,9 @@ namespace {
 	}
 }
 
-TileTransitor::TileTransitor(int cellSize, int interval) :cellSize_(cellSize),
-Transitor(interval)
+FallTileTransitor::FallTileTransitor(int cellSize, float gravity,int interval) :cellSize_(cellSize),
+Transitor(interval),
+g_(gravity)
 {
 	const auto& wsize=Application::GetInstance().GetWindowSize();
 	int xnum = (wsize.w / cellSize_)+1;
@@ -20,10 +21,10 @@ Transitor(interval)
 			tiles_.push_back({xidx,yidx});
 		}
 	}
-	
+	std::shuffle(tiles_.begin(), tiles_.end(), mt_);
 }
 
-void TileTransitor::Update()
+void FallTileTransitor::Update()
 {
 	if (frame_ < interval_) {
 		++frame_;
@@ -35,23 +36,38 @@ void TileTransitor::Update()
 	if (IsEnd()) {
 		return;
 	}
-	//std::uniform_int_distribution<int> uid(0, tiles_.size() - 1);
-	std::shuffle(tiles_.begin(), tiles_.end(),mt_);
+
+	for (auto& cell : tiles_) {
+		if (cell.vy > 0.0f) {
+			cell.vy += g_;
+			cell.yoffset += cell.vy;
+		}
+	}
+	
+	auto rit = tiles_.rbegin();
 	const auto& wsize = Application::GetInstance().GetWindowSize();
 	int xnum = (wsize.w / cellSize_) + 1;
 	int ynum = (wsize.h / cellSize_) + 1;
-	int eraseNum= ((xnum * ynum) / interval_);
-	if (tiles_.size() > eraseNum) {
-		tiles_.erase(tiles_.end() - eraseNum, tiles_.end());
+	int fallNum = ((xnum * ynum) / interval_);
+
+	for (int i=0; rit != tiles_.rend() && i<fallNum; ++rit) {
+		
+		if (rit->vy > 0.0f || rit->yoffset > 0) {
+			continue;
+		}
+		else {
+			++i;
+			rit->vy += g_;
+			rit->yoffset += rit->vy;
+		}
 	}
-	else {
-		tiles_.clear();
-	}
+
 	
+
 
 }
 
-void TileTransitor::Draw()
+void FallTileTransitor::Draw()
 {
 	if (IsEnd()) {
 		return;
@@ -63,7 +79,7 @@ void TileTransitor::Draw()
 	for (const auto& cell : tiles_) {
 		DrawRectGraph(
 			cell.xidx * cellSize_,
-			cell.yidx * cellSize_,
+			cell.yidx * cellSize_+cell.yoffset ,
 			cell.xidx * cellSize_,
 			cell.yidx * cellSize_,
 			cellSize_, cellSize_,

@@ -2,18 +2,9 @@
 #include"../Application.h"
 #include<DxLib.h>
 
-void StripTransitor::Start()
+StripTransitor::StripTransitor(int width, int interval):Transitor(interval),
+width_(width)
 {
-	const auto& size = Application::GetInstance().GetWindowSize();
-	auto scr=GetDrawScreen();
-	oldRT_ = MakeGraph(size.w, size.h);
-	newRT_ = MakeScreen(size.w, size.h);
-	//int result = BltDrawValidGraph(scr, 0, 0, size.w, size.h, 0, 0, oldRT_);//åªç›ÇÃâÊñ ÇÃèÛãµÇÉRÉsÅ[
-
-	int result = GetDrawScreenGraph(0, 0, size.w, size.h, oldRT_,true);
-	result = DrawGraph(0, 0, oldRT_, true);
-	//DrawBox(100, 100, 200, 200, 0xffff00, true);
-	frame_ = 0;
 }
 
 void StripTransitor::Update()
@@ -35,18 +26,17 @@ void StripTransitor::Draw()
 	}
 	SetDrawScreen(DX_SCREEN_BACK);
 	const auto& wsize=Application::GetInstance().GetWindowSize();
+	auto rate = (float)frame_ / (float)interval_;
 	int lp = (wsize.w / width_) + 1;
+	DrawRectGraph(0, 0, 0, 0, wsize.w, wsize.h, oldRT_, true);
 	for (int i = 0; i < lp; ++i) {
 		if (i % 2 == 0) {
-			DrawRectGraph(i * width_, 0, i * width_, 0, width_, wsize.h, newRT_, true);
+			DrawRectGraph(i * width_, wsize.h*(rate-1.0f), i * width_, 0, width_, wsize.h, newRT_, true);
 		}
 		else {
-			DrawRectGraph(i * width_, 0, i * width_, 0, width_, wsize.h, oldRT_, true);
+			DrawRectGraph(i * width_, wsize.h * (1.0f-rate), i * width_, 0, width_, wsize.h, newRT_, true);
 		}
 	}
 }
 
-bool StripTransitor::IsEnd() const
-{
-	return frame_>=interval_;
-}
+

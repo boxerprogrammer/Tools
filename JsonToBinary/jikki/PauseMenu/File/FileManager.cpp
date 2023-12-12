@@ -102,7 +102,9 @@ FileManager::Delete(const std::wstring& path)
 	--file->count_;
 	if (file->count_ == 0) {
 		file->Delete();
+		fileTable_.erase(path);
 	}
+	
 }
 FileManager::~FileManager()
 {

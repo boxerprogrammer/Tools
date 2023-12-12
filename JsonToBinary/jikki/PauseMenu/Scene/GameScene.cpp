@@ -3,6 +3,8 @@
 #include"../Input.h"
 #include"GameoverScene.h"
 #include"SceneManager.h"
+#include"../File/FileManager.h"
+#include"../File/File.h"
 #include"PauseScene.h"
 #include<sstream>
 #include<iomanip>
@@ -12,6 +14,8 @@
 #include<random>
 #include"../Enemy/EnemyManager.h"
 #include"../Transition/StripTransitor.h"
+#include"../Transition/TileTransitor.h"
+#include"../Transition/FallTileTransitor.h"
 void GameScene::InitializeUpdate(Input& input)
 {
 	auto& app = Application::GetInstance();
@@ -130,7 +134,10 @@ void GameScene::InitializeUpdate(Input& input)
 		"adventurer-wall-slide-01.png"
 	};
 	
-	imgH_=LoadGraph(L"img/hero.png");
+	auto& fileMgr=sceneManager_.GetFileManager();
+
+	imgH_= fileMgr.LoadImageFile(L"img/hero.png");
+	bgH_ = fileMgr.LoadImageFile(L"img/bg/irastya_bg.png");
 	cutDataFile_->Open(L"img/hero_rects2.dat");
 	updateFunc_ = &GameScene::LoadingUpdate;
 	drawFunc_ = &GameScene::LoadingDraw;
@@ -188,6 +195,7 @@ void GameScene::NormalUpdate(Input& input)
 	enemyManager_->Update();
 	if (input.IsTriggered("next")) {
 		sceneManager_.ChangeScene(std::make_shared<GameoverScene>(sceneManager_));
+		return;
 	}
 	else if (input.IsTriggered("pause")) {
 		sceneManager_.PushScene(std::make_shared<PauseScene>(sceneManager_));
@@ -203,6 +211,10 @@ void GameScene::NormalUpdate(Input& input)
 
 void GameScene::NormalDraw()
 {
+	ClearDrawScreen();
+
+	DrawGraph(0, 0, bgH_->GetHandle(), true);
+
 	DrawFormatString(50, 30, 0xffffff, L"FPS=%2.2f", fps_);
 	DrawString(50, 50, L"Game Scene", 0xffffff);
 
@@ -210,12 +222,15 @@ void GameScene::NormalDraw()
 
 	int idx=(frame_/6)%filenames_.size();
 	auto it = rectTable_.find(filenames_[idx]);
+	constexpr float draw_scale = 10.0f;
 	if (it != rectTable_.end()) {
 		auto& rc = it->second;
-		DrawRectRotaGraph(220+rc.offX*5, 240+rc.offY*5,
+		DrawRectRotaGraph(
+			220+rc.offX* draw_scale,
+			240+rc.offY* draw_scale,
 			rc.pos.x, rc.pos.y,
 			rc.size.w, rc.size.h,
-			5.0f, 0.0f, imgH_, true);
+			draw_scale, 0.0f, imgH_->GetHandle(), true);
 	}
 	else {
 		assert(0);
@@ -230,7 +245,9 @@ drawFunc_ (&GameScene::InitializeDraw)
 {
 	cutDataFile_ = std::make_shared<MimicFile>();
 	enemyManager_ = std::make_shared<EnemyManager>();
-	transitor_ = std::make_shared<StripTransitor>();
+	//transitor_ = std::make_shared<StripTransitor>();
+	//transitor_ = std::make_shared<TileTransitor>();
+	transitor_ = std::make_shared<FallTileTransitor>(30,0.5f,240);
 	transitor_->Start();
 }
 
@@ -241,7 +258,7 @@ void GameScene::Update(Input& input)
 
 void GameScene::Draw()
 {
-	ClearDrawScreen();
+	
 	(this->*drawFunc_)();
 
 }

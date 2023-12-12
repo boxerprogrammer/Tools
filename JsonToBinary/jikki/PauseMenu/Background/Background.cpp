@@ -6,6 +6,9 @@ Background::Background(float scale):bgScale_(scale)
 {
 
 }
+Background::~Background()
+{
+}
 void Background::AddPart(std::shared_ptr<File> file, float scale, const Vector2f& rate, int priority)
 {
 	const auto& size = Application::GetInstance().GetWindowSize();

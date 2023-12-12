@@ -16,6 +16,11 @@ BGPart::BGPart(const std::shared_ptr<File> file, float scale, Position2f pos, Ve
 	GetGraphSize(file->GetHandle(), &imgSize_.w, &imgSize_.h);
 }
 
+BGPart::~BGPart()
+{
+
+}
+
 bool BGPart::operator<(const BGPart& val)
 {
 	return priority_ < val.priority_;
