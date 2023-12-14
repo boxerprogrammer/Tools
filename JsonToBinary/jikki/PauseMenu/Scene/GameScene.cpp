@@ -16,6 +16,7 @@
 #include"../Transition/StripTransitor.h"
 #include"../Transition/TileTransitor.h"
 #include"../Transition/FallTileTransitor.h"
+#include"../Transition/IrisTransitor.h"
 void GameScene::InitializeUpdate(Input& input)
 {
 	auto& app = Application::GetInstance();
@@ -247,7 +248,9 @@ drawFunc_ (&GameScene::InitializeDraw)
 	enemyManager_ = std::make_shared<EnemyManager>();
 	//transitor_ = std::make_shared<StripTransitor>();
 	//transitor_ = std::make_shared<TileTransitor>();
-	transitor_ = std::make_shared<FallTileTransitor>(30,0.5f,240);
+	//transitor_ = std::make_shared<FallTileTransitor>(30,0.5f,240);
+	int st=LoadGraph(L"img/transit/star.png");
+	transitor_ = std::make_shared<IrisTransitor>(false,60,st);
 	transitor_->Start();
 }
 
