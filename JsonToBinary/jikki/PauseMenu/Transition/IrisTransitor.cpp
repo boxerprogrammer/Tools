@@ -3,8 +3,9 @@
 #include<DxLib.h>
 #include<cmath>
 
-IrisTransitor::IrisTransitor(bool irisOut,int interval,int gHandle) :Transitor(interval),
+IrisTransitor::IrisTransitor(bool irisOut,int interval, bool isTiled,int gHandle) :Transitor(interval),
 irisOut_(irisOut),
+isTiled_(isTiled),
 gHandle_(gHandle)
 {
 	const auto& wsize=Application::GetInstance().GetWindowSize();
@@ -44,25 +45,28 @@ void IrisTransitor::Draw()
 		maskedRT = oldRT_;
 		rate = 1.0f - rate;
 	}
-	//float radius = (50*diagonalLength_/320) * rate;
+	//
 	float radius = (diagonalLength_ ) * rate;
-	
-	int xdiv = (640 / 50) + 1;
-	int ydiv = (640 / 50) + 1;
-
-
 	SetDrawScreen(handleForMaskScreen_);
 	ClearDrawScreen();
-	//for (int y = 0; y < xdiv; ++y) {
-	//	for (int x = 0; x < xdiv; ++x) {
-	//		DrawCircleAA(50+x*100, 50+y*100, radius, 32, 0xffffff, true);
-	//	}
-	//}
+	
 	if (gHandle_ == -1) {
-		DrawCircleAA(320, 240, radius, 32, 0xffffff, true); 
+		if (isTiled_) {
+			constexpr int xdiv = (640 / 50) + 1;
+			constexpr int ydiv = (640 / 50) + 1;
+			radius = (50 * diagonalLength_ / 320) * rate;
+			for (int y = 0; y < xdiv; ++y) {
+				for (int x = 0; x < xdiv; ++x) {
+					DrawCircleAA(50 + x * 100, 50 + y * 100, radius, 32, 0xffffff, true);
+				}
+			}
+		}
+		else {
+			DrawCircleAA(320, 240, radius, 32, 0xffffff, true);
+		}
 	}
 	else {
-		DrawRotaGraphFast(320, 240, rate * 3.5f, rate*2.0f, gHandle_, true);
+		DrawRotaGraphFast(320, 240, rate * 3.5f, rate * 2.0f, gHandle_, true);
 	}
 	
 	

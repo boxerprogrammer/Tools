@@ -19,6 +19,6 @@ public:
     FallTileTransitor(int cellSize = 50, float gravity=0.0f,int interval = 60);
     virtual void Update() override;
     virtual void Draw() override;
-   
+    virtual bool IsEnd() const override;
 };
 

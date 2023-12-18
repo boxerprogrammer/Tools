@@ -2,11 +2,7 @@
 #include"../Application.h"
 #include<DxLib.h>
 
-Transitor::~Transitor()
-{
-	DeleteGraph(oldRT_);
-	DeleteGraph(newRT_);
-}
+
 
 void Transitor::Start()
 {
@@ -18,6 +14,13 @@ void Transitor::Start()
 	int result = GetDrawScreenGraph(0, 0, size.w, size.h, oldRT_, true);
 	frame_ = 0;
 }
+
+Transitor::~Transitor()
+{
+	DeleteGraph(oldRT_);
+	DeleteGraph(newRT_);
+}
+
 
 bool 
 Transitor::IsEnd() const

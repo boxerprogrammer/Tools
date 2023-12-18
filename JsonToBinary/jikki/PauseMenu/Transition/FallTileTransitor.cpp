@@ -6,6 +6,7 @@ namespace {
 	int CeilDivive(int lval,int rval){
 		return (lval + ((rval - lval % rval) % rval) / rval);
 	}
+	constexpr int additional_time = 60;
 }
 
 FallTileTransitor::FallTileTransitor(int cellSize, float gravity,int interval) :cellSize_(cellSize),
@@ -26,11 +27,12 @@ g_(gravity)
 
 void FallTileTransitor::Update()
 {
-	if (frame_ < interval_) {
+	
+	if (frame_ < interval_+ additional_time) {
 		++frame_;
 		SetDrawScreen(newRT_);
 	}
-	else if (frame_ == interval_) {
+	else if (frame_ == interval_+ additional_time) {
 		SetDrawScreen(DX_SCREEN_BACK);
 	}
 	if (IsEnd()) {
@@ -73,18 +75,27 @@ void FallTileTransitor::Draw()
 		return;
 	}
 	SetDrawScreen(DX_SCREEN_BACK);
+	float amp=frame_ % 31;
+	int yoffset = 10*((amp / 30.0f) - 1.0f);
 	const auto& wsize = Application::GetInstance().GetWindowSize();
 	auto rate = (float)frame_ / (float)interval_;
-	DrawRectGraph(0, 0, 0, 0, wsize.w, wsize.h, newRT_, true);
+	DrawRectGraph(0, yoffset, 0, 0, wsize.w, wsize.h, newRT_, true);
 	for (const auto& cell : tiles_) {
 		DrawRectGraph(
 			cell.xidx * cellSize_,
-			cell.yidx * cellSize_+cell.yoffset ,
+			cell.yidx * cellSize_+cell.yoffset + yoffset,
 			cell.xidx * cellSize_,
 			cell.yidx * cellSize_,
 			cellSize_, cellSize_,
 			oldRT_, true);
 	}
+}
+
+
+bool
+FallTileTransitor::IsEnd() const
+{
+	return frame_ >= interval_+ additional_time;
 }
 
 

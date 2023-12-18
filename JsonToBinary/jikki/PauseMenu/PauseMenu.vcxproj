@@ -139,6 +139,8 @@
     <ClCompile Include="Background\BGPart.cpp" />
     <ClCompile Include="Enemy\EnemyManager.cpp" />
     <ClCompile Include="Enemy\Enemy.cpp" />
+    <ClCompile Include="Transition\PushTransitor.cpp" />
+    <ClCompile Include="Transition\FadeTransitor.cpp" />
     <ClCompile Include="File\File.cpp" />
     <ClCompile Include="File\FileManager.cpp" />
     <ClCompile Include="File\ImageFile.cpp" />
@@ -171,6 +173,8 @@
     <ClInclude Include="Background\BGPart.h" />
     <ClInclude Include="Enemy\EnemyManager.h" />
     <ClInclude Include="Enemy\Enemy.h" />
+    <ClInclude Include="Transition\PushTransitor.h" />
+    <ClInclude Include="Transition\FadeTransitor.h" />
     <ClInclude Include="File\File.h" />
     <ClInclude Include="File\FileManager.h" />
     <ClInclude Include="File\ImageFile.h" />

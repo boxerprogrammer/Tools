@@ -13,6 +13,8 @@
 #include"../Application.h"
 #include<random>
 #include"../Enemy/EnemyManager.h"
+#include"../Transition/FadeTransitor.h"
+#include"../Transition/PushTransitor.h"
 #include"../Transition/StripTransitor.h"
 #include"../Transition/TileTransitor.h"
 #include"../Transition/FallTileTransitor.h"
@@ -244,14 +246,43 @@ GameScene::GameScene(SceneManager& manager) :Scene(manager),
 updateFunc_ (&GameScene::InitializeUpdate),
 drawFunc_ (&GameScene::InitializeDraw)
 {
+	static int count = 0;
+	std::vector<std::function<std::shared_ptr<Transitor>(void)>> transitMakers;
+	transitMakers.push_back([]() {
+		return std::make_shared<FadeTransitor>();
+	});
+	transitMakers.push_back([]() {
+		return std::make_shared<PushTransitor>();
+	});
+	transitMakers.push_back([]() {
+		return std::make_shared<StripTransitor>();
+	});
+	transitMakers.push_back([]() {
+		return std::make_shared<TileTransitor>();
+	});
+	transitMakers.push_back([]() {
+		return std::make_shared<IrisTransitor>();
+	});
+	transitMakers.push_back([]() {
+		return std::make_shared<IrisTransitor>(true);
+	});
+	transitMakers.push_back([]() {
+		return std::make_shared<IrisTransitor>(false, 60, true);
+	});
+	transitMakers.push_back([]() {
+		int st = LoadGraph(L"img/transit/star.png");
+		return std::make_shared<IrisTransitor>(false, 60, false, st);
+	});
+	transitMakers.push_back([]() {
+		return std::make_shared<FallTileTransitor>(20, 10.0f, 240);
+	});
+	
 	cutDataFile_ = std::make_shared<MimicFile>();
 	enemyManager_ = std::make_shared<EnemyManager>();
-	//transitor_ = std::make_shared<StripTransitor>();
-	//transitor_ = std::make_shared<TileTransitor>();
-	//transitor_ = std::make_shared<FallTileTransitor>(30,0.5f,240);
-	int st=LoadGraph(L"img/transit/star.png");
-	transitor_ = std::make_shared<IrisTransitor>(false,60,st);
+	
+	transitor_ = transitMakers[count]();
 	transitor_->Start();
+	count = (count + 1) % transitMakers.size();
 }
 
 void GameScene::Update(Input& input)
