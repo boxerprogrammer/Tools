@@ -20,7 +20,6 @@ Transitor(interval)
 			tiles_.push_back({xidx,yidx});
 		}
 	}
-	
 }
 
 void TileTransitor::Update()
@@ -35,7 +34,6 @@ void TileTransitor::Update()
 	if (IsEnd()) {
 		return;
 	}
-	//std::uniform_int_distribution<int> uid(0, tiles_.size() - 1);
 	std::shuffle(tiles_.begin(), tiles_.end(),mt_);
 	const auto& wsize = Application::GetInstance().GetWindowSize();
 	int xnum = (wsize.w / cellSize_) + 1;
@@ -47,8 +45,6 @@ void TileTransitor::Update()
 	else {
 		tiles_.clear();
 	}
-	
-
 }
 
 void TileTransitor::Draw()

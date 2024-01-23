@@ -5,10 +5,10 @@ class IrisTransitor:
 {
 private:
 	int width_ = 100;
-	int handleForMaskScreen_;
-	int maskH_;
-	float diagonalLength_;
-	bool irisOut_=false;
+	int handleForMaskScreen_;//マスク転送用グラフィックハンドル
+	int maskH_;//マスクハンドル
+	float diagonalLength_;//対角線の長さ
+	bool irisOut_=false;//アイリスアウトフラグ(falseならアイリスイン)
 	int gHandle_=-1;
 	bool isTiled_ = false;
 public:

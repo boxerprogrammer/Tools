@@ -3,17 +3,11 @@
 class PushTransitor :
     public Transitor
 {
-public:
-	enum class PushDirection {
-		up,
-		down,
-		right,
-		left
-	};
+
 private:
-	PushDirection direction_;//ƒvƒbƒVƒ…•ûŒü
+	TransitDirection direction_;//ˆÚ“®•ûŒü
 public:
-	PushTransitor(PushDirection dir=PushDirection::up, int interval = 60);
+	PushTransitor(TransitDirection dir=TransitDirection::up, int interval = 60);
 	virtual void Update() override;
 	virtual void Draw() override;
 };

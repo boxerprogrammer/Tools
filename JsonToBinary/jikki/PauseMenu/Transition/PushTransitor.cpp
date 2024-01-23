@@ -2,7 +2,7 @@
 #include<DxLib.h>
 #include"../Application.h"
 
-PushTransitor::PushTransitor(PushDirection dir, int interval):direction_(dir),Transitor(interval)
+PushTransitor::PushTransitor(TransitDirection dir, int interval):direction_(dir),Transitor(interval)
 {
 }
 
@@ -31,16 +31,16 @@ void PushTransitor::Draw()
 	int endX=0;
 	int endY=0;
 	switch (direction_) {
-	case PushDirection::left:
+	case TransitDirection::left:
 		endX = -wsize.w;
 		break;
-	case PushDirection::right:
+	case TransitDirection::right:
 		endX = wsize.w;
 		break;
-	case PushDirection::up:
+	case TransitDirection::up:
 		endY = -wsize.h;
 		break;
-	case PushDirection::down:
+	case TransitDirection::down:
 		endY = wsize.h;
 		break;
 

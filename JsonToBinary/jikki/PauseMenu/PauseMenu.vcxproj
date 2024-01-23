@@ -166,6 +166,7 @@
     <ClCompile Include="Enemy\Slime.cpp" />
     <ClCompile Include="StringUtility.cpp" />
     <ClCompile Include="Transition\Transitor.cpp" />
+    <ClCompile Include="Transition\WipeTransitor.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
@@ -200,6 +201,7 @@
     <ClInclude Include="Enemy\Slime.h" />
     <ClInclude Include="StringUtility.h" />
     <ClInclude Include="Transition\Transitor.h" />
+    <ClInclude Include="Transition\WipeTransitor.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="PauseMenu.rc" />

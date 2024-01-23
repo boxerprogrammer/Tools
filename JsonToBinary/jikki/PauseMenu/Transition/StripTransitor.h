@@ -1,6 +1,6 @@
 #pragma once
 #include "Transitor.h"
-//短冊トランジション
+//短冊トランジション(縦縞)
 class StripTransitor :
     public Transitor
 {

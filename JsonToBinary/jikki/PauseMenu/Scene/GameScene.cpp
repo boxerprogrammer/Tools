@@ -19,6 +19,7 @@
 #include"../Transition/TileTransitor.h"
 #include"../Transition/FallTileTransitor.h"
 #include"../Transition/IrisTransitor.h"
+#include"../Transition/WipeTransitor.h"
 void GameScene::InitializeUpdate(Input& input)
 {
 	auto& app = Application::GetInstance();
@@ -248,6 +249,9 @@ drawFunc_ (&GameScene::InitializeDraw)
 {
 	static int count = 0;
 	std::vector<std::function<std::shared_ptr<Transitor>(void)>> transitMakers;
+	transitMakers.push_back([]() {
+		return std::make_shared<WipeTransitor>();
+	});
 	transitMakers.push_back([]() {
 		return std::make_shared<FadeTransitor>();
 	});

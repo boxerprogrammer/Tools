@@ -1,4 +1,12 @@
 #pragma once
+
+enum class TransitDirection {
+	up,
+	down,
+	right,
+	left
+};
+
 /// <summary>
 /// シーン遷移時演出基底クラス
 /// </summary>
